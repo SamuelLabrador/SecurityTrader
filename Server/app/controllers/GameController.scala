@@ -21,4 +21,8 @@ class GameController @Inject() (val controllerComponents: ControllerComponents)
       WebSocketActor.props(out)
     }
   }
+
+  def status = Action { implicit request: Request[AnyContent] =>
+    Ok("Ok")
+  }
 }
