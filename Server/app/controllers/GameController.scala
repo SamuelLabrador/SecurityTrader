@@ -16,7 +16,7 @@ class GameController @Inject() (val controllerComponents: ControllerComponents)
                                (implicit system: ActorSystem, mat: Materializer)
   extends BaseController {
 
-  def socket() = WebSocket.accept[String, String] { request =>
+  def socket = WebSocket.accept[String, String] { request =>
     ActorFlow.actorRef { out =>
       WebSocketActor.props(out)
     }

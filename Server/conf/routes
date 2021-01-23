@@ -3,13 +3,21 @@
 # ~~~~
 
 
-# Routes for Default API
-
-GET /status    api.DefaultApiController.statusGet()
+###
+#  summary: Gets status of server
+#  responses:
+#    200:
+#      description: success
+###
+GET /status                         controllers.GameController.status
 
 # Map static resources from the /public folder to the /assets URL path
-GET /assets/*file           controllers.Assets.at(file)
-GET /versionedAssets/*file  controllers.Assets.versioned(file)
+### NoDocs ###
+GET /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)
 
-# Swagger UI
-GET /api                    api.ApiDocController.api
+### NoDocs ###
+# http://localhost:9000/docs/swagger-ui/index.html?url=/assets/swagger.json#/
+GET /docs/swagger-ui/*file          controllers.Assets.at(path:String="/public/lib/swagger-ui", file:String)
+
+### NoDocs ###
+GET /ws                             controllers.GameController.socket
