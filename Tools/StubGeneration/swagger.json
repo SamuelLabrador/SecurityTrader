@@ -1,0 +1,1 @@
+{"paths":{"/status":{"get":{"operationId":"status","tags":["routes"],"summary":"Gets status of server","responses":{"200":{"description":"success"}}}}},"produces":["application/json"],"definitions":{},"swagger":"2.0","consumes":["application/json"],"info":{"description":"","title":"Security Trader API","version":"1.0-SNAPSHOT"},"tags":[{"name":"routes"}]}
