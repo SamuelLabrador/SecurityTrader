@@ -1,19 +1,17 @@
 import { R3ExpressionFactoryMetadata } from '@angular/compiler/src/render3/r3_factory';
 import { Injectable } from '@angular/core';
-import * as Rx from "rxjs/Rx";
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { ConfigurationService } from './configuration.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
-  private message: Rx.Subject<MessageEvent>;
+  webSocket: WebSocketSubject<unknown>;
 
-  public connect(url): Rx.Subject<MessageEvent> {
-    if(!this.subject) {
-      this.subject = this.create(url);
-    }
-    return this.subject;
-    
+  constructor(private configService: ConfigurationService) { 
+    this.webSocket = webSocket(configService.wsUrl);
+
+    // TODO: Research and implement ws logic
   }
-  constructor() { }
 }
