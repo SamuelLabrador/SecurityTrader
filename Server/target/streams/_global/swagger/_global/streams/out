@@ -1,4 +1,4 @@
-[0m[[0m[0minfo[0m] [0m[0mrunning com.iheart.playSwagger.SwaggerSpecRunner C:\Users\Sam\Desktop\SecurityTrader\Server\target\swagger\swagger.json routes models com.iheart.playSwagger.ParametricTypeNamesTransformer false 1.0-SNAPSHOT false false none[0m
+[0m[[0m[0minfo[0m] [0m[0mrunning com.iheart.playSwagger.SwaggerSpecRunner C:\Users\Sam\Desktop\SecurityTrader\Server\target\swagger\swagger.json routes models.rest com.iheart.playSwagger.ParametricTypeNamesTransformer false 1.0-SNAPSHOT false false none[0m
 [0m[[0m[0mdebug[0m] [0m[0mWaiting for threads to exit or System.exit to be called.[0m
 [0m[[0m[0mdebug[0m] [0m[0m  Classpath:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	C:\Users\Sam\Desktop\SecurityTrader\Server\target\scala-2.13\classes[0m

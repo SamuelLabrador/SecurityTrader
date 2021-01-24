@@ -4,31 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf649bf7-37e5-448a-bcaa-b21215c173e8" name="Default Changelist" comment="">
+    <list default="true" id="b5f6f01d-b918-4e41-9c41-0b7769b6a9cd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/models/rest/ServerStatus.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/GameController.scala" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/GameController.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/conf/application.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/routes" beforeDir="false" afterPath="$PROJECT_DIR$/conf/routes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/application.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/_global/_global/_global/streams/sync-exported-assets-web-assets" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/_global/_global/_global/streams/sync-exported-assets-web-assets" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/_global/playCommonClassloader/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/_global/playCommonClassloader/_global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/_global/swagger/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/_global/swagger/_global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileOutputs/previous" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileOutputs/previous" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileSourceFileInputs/previous" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileSourceFileInputs/previous" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/_global/_global/managedSourcePaths/previous" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/_global/_global/managedSourcePaths/previous" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/_global/streams/inc_compile_2.13.zip" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/_global/streams/inc_compile_2.13.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/copy-resources" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/copy-resources" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/playRoutes/_global/streams/op-cache" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/playRoutes/_global/streams/op-cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/web-assets/assets/_global/streams/sync-assets-web-assets" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/web-assets/assets/_global/streams/sync-assets-web-assets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api.module.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api/RoutesApi.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api/api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/git_push.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/git_push.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/model/models.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/generate.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/generate.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.module.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,49 +41,33 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="6tdlg2uw" />
+    <option name="directoryName" value="qxg7rlqx" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
-  <component name="ProjectId" id="1nUr6BKUxphwQIUGmUAgTzX3ruK" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1nVaJsOsuztcx2P2lXlbzmct68t" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.39568347" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
-  </component>
-  <component name="RunManager">
-    <configuration name="run" type="SbtRunConfiguration" factoryName="sbt Task" singleton="false" show_console_on_std_err="false" show_console_on_std_out="false">
-      <option name="allowRunningInParallel" value="true" />
-      <option name="selectedOptions">
-        <list />
-      </option>
-      <option name="tasks" value="run" />
-      <option name="useSbtShell" value="false" />
-      <option name="vmparams" value="-Xms512M -Xmx1024M -Xss1M -XX:+CMSClassUnloadingEnabled" />
-      <option name="workingDir" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="bf649bf7-37e5-448a-bcaa-b21215c173e8" name="Default Changelist" comment="" />
-      <created>1611455335093</created>
+      <changelist id="b5f6f01d-b918-4e41-9c41-0b7769b6a9cd" name="Default Changelist" comment="" />
+      <created>1611477643384</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1611455335093</updated>
+      <updated>1611477643384</updated>
     </task>
     <servers />
   </component>

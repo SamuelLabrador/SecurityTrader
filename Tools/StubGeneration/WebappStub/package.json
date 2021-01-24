@@ -1,0 +1,26 @@
+{
+  "name": "security_trader_api",
+  "version": "1.0.0",
+  "description": "swagger client for security_trader_api",
+  "author": "Swagger Codegen Contributors",
+  "keywords": [
+    "fetch",
+    "typescript",
+    "swagger-client",
+    "security_trader_api"
+  ],
+  "license": "Unlicense",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts" : {
+    "build": "tsc --outDir dist/",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "portable-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.9",
+    "typescript": "^4.0.3"
+  }
+}

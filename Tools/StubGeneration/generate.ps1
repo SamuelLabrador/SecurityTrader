@@ -10,6 +10,6 @@ java -jar .\swagger-codegen-cli.jar generate `
   -i ./swagger.json `
   -l typescript-fetch `
   -o ./WebappStub `
-  --additional-properties packageName="security_trader_api"
+  --additional-properties npmName="security_trader_api"
 
 Copy-Item .\WebappStub\* ..\..\Webapp\security_trader_api\ -Force -Recurse -Verbose

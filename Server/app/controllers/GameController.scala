@@ -9,6 +9,11 @@ import play.api.libs.streams.ActorFlow
 import play.api.mvc._
 import akka.actor.ActorSystem
 import akka.stream.Materializer
+import models.rest.ServerStatus
+import play.api.libs.json.{JsValue, Json}
+
+import java.time.ZonedDateTime
+import java.net.InetAddress
 
 
 @Singleton
@@ -22,7 +27,12 @@ class GameController @Inject() (val controllerComponents: ControllerComponents)
     }
   }
 
+  /**
+   * @return Json containing current server time and ip address
+   */
   def status = Action { implicit request: Request[AnyContent] =>
-    Ok("Ok")
+    val ip = InetAddress.getLocalHost
+    val value = Json.toJson(ServerStatus(ZonedDateTime.now().toInstant.toEpochMilli, ip.getHostAddress))
+    Ok(value)
   }
 }
