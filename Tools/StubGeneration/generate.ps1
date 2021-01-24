@@ -1,15 +1,14 @@
-openapi-generator-cli.cmd generate `
-    -i .\openapi.yaml `
-    -g typescript-angular `
-    -o ./ClientStub
+# Download every time in case swagger.json changes.
+Invoke-WebRequest -Uri "http://localhost:9000/assets/swagger.json" -OutFile swagger.json
 
-openapi-generator-cli.cmd generate `
-    -i .\openapi.yaml `
-    -g scala-play-server `
-    --additional-properties=java8=false `
-    -o ./ServerStub
+if (!(Test-Path -Path ./swagger-codegen-cli.jar)) {
+  Write-Output "Downloading swagger-codegen-cli.jar for client codegen"
+  Invoke-WebRequest -Uri "https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.18/swagger-codegen-cli-2.4.18.jar" -OutFile swagger-codegen-cli.jar
+}
 
-Write-Output Copying server items... 
-Copy-Item ./ServerStub/app/* ../../Server/app/ -Force
-Copy-Item ./ServerStub/conf/routes ../../Server/conf/routes -Force
-Copy-Item ./ServerStub/public/openapi.json ../../Server/public/openapi.json 
+java -jar .\swagger-codegen-cli.jar generate `
+  -i ./swagger.json `
+  -l typescript-angularjs `
+  -o ./WebappStub
+
+Copy-Item .\WebappStub\* ..\..\Webapp\api\ -Force

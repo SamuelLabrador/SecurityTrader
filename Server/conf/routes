@@ -2,14 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-
 ###
 #  summary: Gets status of server
 #  responses:
 #    200:
 #      description: success
 ###
-GET /status                         controllers.GameController.status
+GET /api/status                         controllers.GameController.status
 
 # Map static resources from the /public folder to the /assets URL path
 ### NoDocs ###

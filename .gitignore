@@ -1,2 +1,5 @@
-ServerStub/
+# Directories
 ClientStub/
+
+# Files
+swagger-codegen-cli.jar
