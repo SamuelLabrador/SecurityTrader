@@ -1,0 +1,23 @@
+2021-01-23 18:34:07 [34mINFO [0;39m [36mplay.api.http.EnabledFilters[0;39m [35m[0;39m Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+    play.filters.cors.CORSFilter
+
+2021-01-23 18:34:07 [34mINFO [0;39m [36mplay.api.Play[0;39m [35m[0;39m Application started (Dev) (no global state)
+2021-01-23 18:39:24 [34mINFO [0;39m [36mplay.api.http.EnabledFilters[0;39m [35m[0;39m Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.csrf.CSRFFilter
+    play.filters.headers.SecurityHeadersFilter
+    play.filters.hosts.AllowedHostsFilter
+    play.filters.cors.CORSFilter
+
+2021-01-23 18:39:24 [34mINFO [0;39m [36mplay.api.Play[0;39m [35m[0;39m Application started (Dev) (no global state)
+2021-01-24 00:04:58 [31mWARN [0;39m [36mplay.filters.cors.CORSFilter[0;39m [35m[0;39m Invalid CORS request;Origin=Some(http://localhost:4200);Method=GET;Access-Control-Request-Headers=None
+2021-01-24 00:04:58 [31mWARN [0;39m [36mplay.filters.cors.CORSFilter[0;39m [35m[0;39m Invalid CORS request;Origin=Some(http://localhost:4200);Method=GET;Access-Control-Request-Headers=None
+2021-01-24 00:04:59 [31mWARN [0;39m [36mplay.filters.cors.CORSFilter[0;39m [35m[0;39m Invalid CORS request;Origin=Some(http://localhost:4200);Method=GET;Access-Control-Request-Headers=None
+2021-01-24 00:05:00 [31mWARN [0;39m [36mplay.filters.cors.CORSFilter[0;39m [35m[0;39m Invalid CORS request;Origin=Some(http://localhost:4200);Method=GET;Access-Control-Request-Headers=None
+2021-01-24 00:05:14 [31mWARN [0;39m [36mplay.filters.cors.CORSFilter[0;39m [35m[0;39m Invalid CORS request;Origin=Some(http://localhost:4200);Method=GET;Access-Control-Request-Headers=None
+2021-01-24 00:05:59 [31mWARN [0;39m [36mplay.filters.cors.CORSFilter[0;39m [35m[0;39m Invalid CORS request;Origin=Some(http://localhost:4200);Method=GET;Access-Control-Request-Headers=None
+2021-01-24 00:05:59 [31mWARN [0;39m [36mplay.filters.cors.CORSFilter[0;39m [35m[0;39m Invalid CORS request;Origin=Some(http://localhost:4200);Method=GET;Access-Control-Request-Headers=None

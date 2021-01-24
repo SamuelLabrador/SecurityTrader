@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bf649bf7-37e5-448a-bcaa-b21215c173e8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/actors/WebSocketActor.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/GameController.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/HomeController.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/application.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/messages" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/routes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/swagger.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/build.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/plugins.sbt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/openapi.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/actors/WebSocketActorSpec.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controllers/HomeControllerSpec.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api/RoutesApi.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api/api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/git_push.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/git_push.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/model/models.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/generate.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/generate.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/.swagger-codegen-ignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/.swagger-codegen/VERSION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/api.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/api/RoutesApi.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/api/api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/git_push.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/api/model/models.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.module.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="6tdlg2uw" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1nUr6BKUxphwQIUGmUAgTzX3ruK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.39568347" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+  </component>
+  <component name="RunManager">
+    <configuration name="run" type="SbtRunConfiguration" factoryName="sbt Task" singleton="false" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allowRunningInParallel" value="true" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="tasks" value="run" />
+      <option name="useSbtShell" value="false" />
+      <option name="vmparams" value="-Xms512M -Xmx1024M -Xss1M -XX:+CMSClassUnloadingEnabled" />
+      <option name="workingDir" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bf649bf7-37e5-448a-bcaa-b21215c173e8" name="Default Changelist" comment="" />
+      <created>1611455335093</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611455335093</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
