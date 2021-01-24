@@ -3,7 +3,7 @@ package actors
 import akka.actor._
 
 object RefereeActor {
-  def props(out: ActorRef) = Props(new WebSocketActor(out))
+  def props(out: ActorRef) = Props(new RefereeActor(out))
 }
 
 class RefereeActor(out: ActorRef) extends Actor {

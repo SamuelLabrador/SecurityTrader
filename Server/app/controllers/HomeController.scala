@@ -21,4 +21,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   def index() = Action { implicit request: Request[AnyContent] =>
     Ok("hello world")
   }
+
+  def createGame() = Action { implicit request: Request[AnyContent] =>
+    Ok("created.")
+  }
 }

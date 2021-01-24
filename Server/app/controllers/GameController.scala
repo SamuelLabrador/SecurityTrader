@@ -9,6 +9,7 @@ import play.api.libs.streams.ActorFlow
 import play.api.mvc._
 import akka.actor.ActorSystem
 import akka.stream.Materializer
+import da.SocketPool
 import models.rest.ServerStatus
 import play.api.libs.json.{JsValue, Json}
 
@@ -17,13 +18,14 @@ import java.net.InetAddress
 
 
 @Singleton
-class GameController @Inject() (val controllerComponents: ControllerComponents)
+class GameController @Inject() (val controllerComponents: ControllerComponents,
+                                implicit val socketPool: SocketPool)
                                (implicit system: ActorSystem, mat: Materializer)
   extends BaseController {
 
   def socket = WebSocket.accept[String, String] { request =>
     ActorFlow.actorRef { out =>
-      WebSocketActor.props(out)
+      WebSocketActor.props(socketPool, out)
     }
   }
 
