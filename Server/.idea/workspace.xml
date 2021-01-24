@@ -5,24 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf649bf7-37e5-448a-bcaa-b21215c173e8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/actors/WebSocketActor.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/GameController.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/HomeController.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/application.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/logback.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/messages" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/routes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/swagger.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/build.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/plugins.sbt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/javascripts/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/openapi.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/stylesheets/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/actors/WebSocketActorSpec.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controllers/HomeControllerSpec.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/_global/_global/_global/streams/sync-exported-assets-web-assets" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/_global/_global/_global/streams/sync-exported-assets-web-assets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/_global/playCommonClassloader/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/_global/playCommonClassloader/_global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileOutputs/previous" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileOutputs/previous" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileSourceFileInputs/previous" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/_global/_global/compileSourceFileInputs/previous" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/_global/_global/managedSourcePaths/previous" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/_global/_global/managedSourcePaths/previous" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/_global/streams/inc_compile_2.13.zip" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/_global/streams/inc_compile_2.13.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/export" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncremental/_global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/copy-resources" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/copy-resources" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/copyResources/_global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/compile/playRoutes/_global/streams/op-cache" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/playRoutes/_global/streams/op-cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/web-assets/assets/_global/streams/sync-assets-web-assets" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/web-assets/assets/_global/streams/sync-assets-web-assets" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api.module.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api/RoutesApi.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/api/api.ts" beforeDir="false" />
@@ -31,15 +27,6 @@
       <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/WebappStub/model/models.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/generate.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/generate.ps1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Tools/StubGeneration/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Tools/StubGeneration/swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/.swagger-codegen-ignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/.swagger-codegen/VERSION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/api.module.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/api/RoutesApi.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/api/api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/git_push.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Webapp/api/model/models.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Webapp/webapp/src/app/app.module.ts" afterDir="false" />
     </list>
@@ -72,6 +59,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="project.structure.last.edited" value="Global Libraries" />

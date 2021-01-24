@@ -8,7 +8,8 @@ if (!(Test-Path -Path ./swagger-codegen-cli.jar)) {
 
 java -jar .\swagger-codegen-cli.jar generate `
   -i ./swagger.json `
-  -l typescript-angularjs `
-  -o ./WebappStub
+  -l typescript-fetch `
+  -o ./WebappStub `
+  --additional-properties packageName="security_trader_api"
 
-Copy-Item .\WebappStub\* ..\..\Webapp\api\ -Force -Recurse -Verbose
+Copy-Item .\WebappStub\* ..\..\Webapp\security_trader_api\ -Force -Recurse -Verbose

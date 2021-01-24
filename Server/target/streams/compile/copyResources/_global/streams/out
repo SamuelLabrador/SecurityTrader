@@ -1,2 +1,6 @@
-[debug] Copy resource mappings: 
-[debug] 	
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Sam\Desktop\SecurityTrader\Server\conf\application.conf,C:\Users\Sam\Desktop\SecurityTrader\Server\target\scala-2.13\classes\application.conf)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Sam\Desktop\SecurityTrader\Server\conf\logback.xml,C:\Users\Sam\Desktop\SecurityTrader\Server\target\scala-2.13\classes\logback.xml)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Sam\Desktop\SecurityTrader\Server\conf\messages,C:\Users\Sam\Desktop\SecurityTrader\Server\target\scala-2.13\classes\messages)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Sam\Desktop\SecurityTrader\Server\conf\routes,C:\Users\Sam\Desktop\SecurityTrader\Server\target\scala-2.13\classes\routes)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(C:\Users\Sam\Desktop\SecurityTrader\Server\conf\swagger.yml,C:\Users\Sam\Desktop\SecurityTrader\Server\target\scala-2.13\classes\swagger.yml)[0m
