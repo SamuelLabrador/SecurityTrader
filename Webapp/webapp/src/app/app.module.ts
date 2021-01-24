@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
+import { Configuration } from 'security_trader_api';
+import { ConfigurationService } from './services/configuration.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { ApiService } from './services/api.service';
     AppRoutingModule
   ],
   providers: [
-    ApiService
+    ApiService,
+    ConfigurationService
   ],
   bootstrap: [AppComponent]
 })

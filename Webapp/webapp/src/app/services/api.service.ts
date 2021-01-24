@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RoutesApi, Configuration, ModelsRestServerStatus } from 'security_trader_api';
+import { ConfigurationService } from './configuration.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,15 +8,15 @@ import { RoutesApi, Configuration, ModelsRestServerStatus } from 'security_trade
 export class ApiService {
   api: RoutesApi
 
-  constructor() {
+  constructor(applicationConfig: ConfigurationService) {
     const config = new Configuration({
-      basePath: 'http://localhost:9000'
+      basePath: applicationConfig.serverUrl
     });
 
     this.api = new RoutesApi(config);
   }
 
-  async getStatus(): Promise<ModelsRestServerStatus> {
+  public getStatus(): Promise<ModelsRestServerStatus> {
     return this.api.status();
   }
 }
