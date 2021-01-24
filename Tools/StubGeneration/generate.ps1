@@ -11,4 +11,4 @@ java -jar .\swagger-codegen-cli.jar generate `
   -l typescript-angularjs `
   -o ./WebappStub
 
-Copy-Item .\WebappStub\* ..\..\Webapp\api\ -Force
+Copy-Item .\WebappStub\* ..\..\Webapp\api\ -Force -Recurse -Verbose
