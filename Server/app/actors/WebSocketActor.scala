@@ -2,6 +2,7 @@ package actors
 
 import akka.actor._
 import da.SocketPool
+import models.rest.WebSocketMessage
 import play.api.libs.json._
 
 object WebSocketActor {
@@ -13,7 +14,7 @@ class WebSocketActor (val socketPool: SocketPool, out: ActorRef) extends Actor {
   def receive: PartialFunction[Any, Unit] = {
     case rawMessage: String =>
       val command = Json.parse(rawMessage)
-        .asOpt[Command]
+        .asOpt[WebSocketMessage]
         .getOrElse(throw new Exception("Command not recognized"))
 
       command.msgType match {
@@ -61,9 +62,3 @@ case class JoinGame(id: Long)
 object JoinGame {
   implicit val format: OFormat[JoinGame] = Json.format[JoinGame]
 }
-
-case class Command(msgType: String, data: JsValue)
-object Command {
-  implicit val format: OFormat[Command] = Json.format[Command]
-}
-

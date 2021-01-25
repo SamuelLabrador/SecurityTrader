@@ -14,7 +14,7 @@ libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 libraryDependencies += "org.webjars" % "swagger-ui" % "3.35.0"
 
-swaggerDomainNameSpaces := Seq("models.rest")
+swaggerDomainNameSpaces := Seq("models")
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.controllers._"
 

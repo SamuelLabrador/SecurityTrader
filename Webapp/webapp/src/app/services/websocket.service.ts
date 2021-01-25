@@ -2,6 +2,7 @@ import { R3ExpressionFactoryMetadata } from '@angular/compiler/src/render3/r3_fa
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { ConfigurationService } from './configuration.service';
+import { WebSocketMessage } from 'security_trader_api';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +14,12 @@ export class WebsocketService {
     this.webSocket = webSocket(configService.wsUrl);
 
     // TODO: Research and implement ws logic
+  }
+
+  createLobby() {
+    const msg = {
+      msgType: 'create', 
+      data: {}
+    } as WebSocketMessage;
   }
 }

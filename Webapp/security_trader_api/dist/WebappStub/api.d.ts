@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-/// <reference path="../custom.d.ts" />
+/// <reference path="../../WebappStub/custom.d.ts" />
 import { Configuration } from "./configuration";
 /**
  *

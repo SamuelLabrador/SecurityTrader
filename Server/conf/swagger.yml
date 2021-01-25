@@ -6,3 +6,14 @@ consumes:
   - application/json
 produces:
   - application/json
+definitions:
+  WebSocketMessage:
+    type: "object"
+    required:
+      - msgType
+      - data
+    properties:
+      msgType:
+        type: string
+      data:
+        type: object

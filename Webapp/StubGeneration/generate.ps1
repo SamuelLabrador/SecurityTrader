@@ -12,4 +12,20 @@ java -jar .\swagger-codegen-cli.jar generate `
   -o ./WebappStub `
   --additional-properties npmName="security_trader_api"
 
-Copy-Item .\WebappStub\* ..\..\Webapp\security_trader_api\ -Force -Recurse -Verbose
+Copy-Item .\WebappStub\* ..\security_trader_api\ -Force 
+
+# Build Fetch
+Set-Location ..\security_trader_api
+Write-Output Installing NPM Dependencies
+npm install
+
+Write-Output Packaging module
+npm install url
+npm run-script build
+
+Write-Output Linking module
+npm link
+
+Set-Location ..\webapp
+npm link security_trader_api
+

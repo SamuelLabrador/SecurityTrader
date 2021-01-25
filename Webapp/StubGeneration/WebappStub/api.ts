@@ -98,6 +98,26 @@ export interface ModelsRestServerStatus {
     address: string;
 }
 
+/**
+ * 
+ * @export
+ * @interface WebSocketMessage
+ */
+export interface WebSocketMessage {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebSocketMessage
+     */
+    msgType: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof WebSocketMessage
+     */
+    data: any;
+}
+
 
 /**
  * RoutesApi - fetch parameter creator
