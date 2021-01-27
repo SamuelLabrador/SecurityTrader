@@ -25,7 +25,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd ./Webapp/webapp
     - run: npm install -g angular
-    - run: npm ci
-    - run: ng test
+    - run: cd ./Webapp/webapp && npm ci
+    - run: cd ./Webapp/webapp && ng test
