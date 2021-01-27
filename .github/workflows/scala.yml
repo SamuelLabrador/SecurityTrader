@@ -1,6 +1,8 @@
 name: Scala Automated Tests
 
 on:
+  push:
+    branches: [ SamuelLabrador/6-project-test-automation ]
   pull_request:
     branches: [ master ]
 
