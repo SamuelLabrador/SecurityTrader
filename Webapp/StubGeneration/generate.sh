@@ -25,4 +25,5 @@ npm install
 echo Packaging module
 npm install url
 
-cp ./*.ts ../../webapp/src/app/fetch/
+cp ./dist/*.ts ../../webapp/src/app/fetch/
+cp ./custom.d.ts ../../webapp/src/app/custom.d.ts
