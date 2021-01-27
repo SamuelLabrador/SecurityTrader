@@ -2,7 +2,7 @@ import { R3ExpressionFactoryMetadata } from '@angular/compiler/src/render3/r3_fa
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { ConfigurationService } from './configuration.service';
-import { WebSocketMessage } from 'security_trader_api';
+import { WebSocketMessage } from '../fetch/api';
 
 @Injectable({
   providedIn: 'root'
