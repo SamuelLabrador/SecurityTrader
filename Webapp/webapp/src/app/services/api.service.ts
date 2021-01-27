@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { RoutesApi, Configuration, ModelsRestServerStatus } from 'security_trader_api';
 import { ConfigurationService } from './configuration.service';
+import { RoutesApi, Configuration, ModelsRestServerStatus } from '../fetch/api';
 
 @Injectable({
   providedIn: 'root'
