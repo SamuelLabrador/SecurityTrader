@@ -1,4 +1,4 @@
-name: Scala Automated Tests
+name: Server Tests
 
 on:
   push:
@@ -17,5 +17,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Switch to Server directory
+      run: cd ./Server
     - name: Run tests
       run: sbt test
