@@ -19,10 +19,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup and run tests with code coverage
       uses: actions/setup-node@v1
+      working-directory: ./Webapp/webapp
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install -g angular
-    - run: cd ./Webapp/webapp && npm ci
-    - run: cd ./Webapp/webapp && npm run-script test
+      run: |
+          npm install -g angular
+          npm ci
+          npm run-script test
