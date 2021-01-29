@@ -21,9 +21,8 @@ jobs:
     - name: Setup and run tests with code coverage
       working-directory: ./Webapp/webapp
       run: |
-          npm install -g angular
-          npm ci
-          npm run-script test
+          sudo npm ci
+          sudo npm run-script test
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
