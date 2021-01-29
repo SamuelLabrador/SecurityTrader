@@ -12,11 +12,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup node
@@ -29,3 +24,10 @@ jobs:
           npm install -g angular
           npm ci
           npm run-script test
+    - name: Archive code coverage results    
+      working-directory: ./Webapp/webapp
+      uses: actions/upload-artifact@v2
+      with:
+        name: server-code-coverage-report
+        path: ./coverage/webapp
+
