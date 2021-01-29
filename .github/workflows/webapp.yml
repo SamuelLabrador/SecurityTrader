@@ -24,10 +24,9 @@ jobs:
           npm install -g angular
           npm ci
           npm run-script test
-    - name: Archive code coverage results    
-      working-directory: ./Webapp/webapp
+    - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
         name: server-code-coverage-report
-        path: ./coverage/webapp
+        path: ./Webapp/webapp/coverage/webapp
 
