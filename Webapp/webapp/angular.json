@@ -96,7 +96,11 @@
             "styles": [
               "src/styles.sass"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverageExclude": [
+              "src/app/fetch/**/*"
+            ],
+            "codeCoverage": true
           }
         },
         "lint": {

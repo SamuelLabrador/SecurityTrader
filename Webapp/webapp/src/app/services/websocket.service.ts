@@ -15,11 +15,4 @@ export class WebsocketService {
 
     // TODO: Research and implement ws logic
   }
-
-  createLobby() {
-    const msg = {
-      msgType: 'create', 
-      data: {}
-    } as WebSocketMessage;
-  }
 }

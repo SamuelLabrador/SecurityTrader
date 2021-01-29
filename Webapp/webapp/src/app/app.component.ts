@@ -13,11 +13,10 @@ export class AppComponent {
 
 
   ngOnInit() {
-    this.getStatus();  
+    this.getStatus();
   }
 
   async getStatus() {
     const result = await this.apiService.getStatus();
-    console.log(result);
   }
 }
