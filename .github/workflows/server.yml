@@ -19,6 +19,7 @@ jobs:
       working-directory: ./Server
       run: sbt jacoco
     - name: Archive code coverage results
+      uses: actions/upload-artifact@v2
       with:
         name: server-code-coverage-report
         path: .Server/target/scala-2.13/jacoco/report
