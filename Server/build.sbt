@@ -7,12 +7,15 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, SwaggerPlugin)
 
 scalaVersion := "2.13.3"
 
+val AkkaVersion = "2.6.11"
+
 libraryDependencies += guice
 libraryDependencies += ws
 libraryDependencies ++= Seq(evolutions, jdbc)
 libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 libraryDependencies += "org.webjars" % "swagger-ui" % "3.35.0"
+libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % AkkaVersion % Test
 
 swaggerDomainNameSpaces := Seq("models")
 // Adds additional packages into Twirl

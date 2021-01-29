@@ -16,8 +16,8 @@ trait SocketPool {
 
 @Singleton
 class SocketPoolImpl extends SocketPool {
-  var id: Long = 0
-  var pools: collection.mutable.Map[Long, Seq[ActorRef]] = collection.mutable.Map[Long, Seq[ActorRef]]()
+  private[SocketPoolImpl] var id: Long = 0
+  private[SocketPoolImpl] var pools: collection.mutable.Map[Long, Seq[ActorRef]] = collection.mutable.Map[Long, Seq[ActorRef]]()
 
   def getConnections(poolId: Long): Seq[ActorRef] = {
     if (!this.pools.contains(poolId))
