@@ -26,5 +26,5 @@ jobs:
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
-        name: server-code-coverage-report
+        name: webapp-code-coverage-report
         path: ./Webapp/webapp/coverage/webapp
