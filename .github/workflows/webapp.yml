@@ -22,7 +22,7 @@ jobs:
       working-directory: ./Webapp/webapp
       run: |
           sudo npm ci
-          sudo npm run-script test
+          npm run-script test
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
