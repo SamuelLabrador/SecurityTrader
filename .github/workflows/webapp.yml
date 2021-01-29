@@ -29,4 +29,3 @@ jobs:
       with:
         name: server-code-coverage-report
         path: ./Webapp/webapp/coverage/webapp
-
