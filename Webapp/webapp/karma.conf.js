@@ -37,11 +37,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    flags: [
-      '--no-sandbox',
-      '--disable-gpu'
-    ],
+    browsers: ['ChromeHeadless'],
+    flags: ['--no-sandbox', '--disable-gpu'],
     singleRun: true,
     restartOnFileChange: true
   });
