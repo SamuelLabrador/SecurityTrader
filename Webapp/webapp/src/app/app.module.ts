@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { ConfigurationService } from './services/configuration.service';
-import { WebsocketService } from './services/websocket.service';
+import { WebSocketService } from './services/websocket.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { WebsocketService } from './services/websocket.service';
   providers: [
     ApiService,
     ConfigurationService,
-    WebsocketService
+    WebSocketService
   ],
   bootstrap: [AppComponent]
 })
