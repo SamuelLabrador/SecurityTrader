@@ -25,6 +25,10 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion
 )
 swaggerDomainNameSpaces := Seq("models")
+
+PlayKeys.devSettings += "play.server.http.port" -> "9000"
+PlayKeys.devSettings += "play.server.https.port" -> "9443"
+
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.controllers._"
 
