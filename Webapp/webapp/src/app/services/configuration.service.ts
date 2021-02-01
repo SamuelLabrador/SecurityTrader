@@ -8,9 +8,9 @@ export class ConfigurationService {
   serverUrl: string;
   wsUrl: string;
 
-  constructor() { 
+  constructor() {
     this.production = false;
-    this.serverUrl = 'http://localhost:9000';
-    this.wsUrl = 'ws://localhost:9000/ws';
+    this.serverUrl = 'https://localhost:9443';
+    this.wsUrl = 'ws://localhost:9443/ws';
   }
 }
