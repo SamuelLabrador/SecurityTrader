@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'webapp';
 
   constructor (private apiService: ApiService) {}
 

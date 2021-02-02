@@ -3,10 +3,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { ModelsRestServerStatus } from './fetch/api';
+import {By} from "@angular/platform-browser";
 
 describe('AppComponent', () => {
 
-  // Declare our 'mock' object. 
+  // Declare our 'mock' object.
   let mockApiService: jasmine.SpyObj<ApiService>;
 
   // Before each unit test is run, the necessary variables are reset.
@@ -23,7 +24,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         // Instead of instantiating another component, we pass in our
-        // mock object. 
+        // mock object.
         {provide: ApiService, useValue: mockApiService}
       ]
     }).compileComponents();
@@ -35,17 +36,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'webapp'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('webapp');
-  });
-
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('webapp app is running!');
+    const debugElement = fixture.debugElement;
+
+    // Parse the component for the element that has the class '.t-title'
+    const titleElement = debugElement.query(By.css('.t-title'));
+
+    // Check that title is not null
+    expect(titleElement).toBeTruthy();
+    // Check that the title text is correct
+    expect(titleElement.nativeElement.innerHTML).toBe('Security Trader');
   });
 
   it('should make a request to get the status of the server', () => {
@@ -59,4 +61,26 @@ describe('AppComponent', () => {
 
     expect(mockApiService.getStatus).toHaveBeenCalledTimes(1);
   });
+
+  it('createGame should create a game', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    component.createGame();
+
+    // TODO: test create game logic when implemented
+  });
+
+  it('joinGame properly join a game', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    component.joinGame();
+
+    // TODO: test join game logic when implemented
+  })
 });
