@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { ConfigurationService } from './services/configuration.service';
 import { WebSocketService } from './services/websocket.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { WebSocketService } from './services/websocket.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [
     ApiService,
