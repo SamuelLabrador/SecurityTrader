@@ -8,10 +8,18 @@ import { ConfigurationService } from './services/configuration.service';
 import { WebSocketService } from './services/websocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from "@angular/material/button";
+import { GameComponent } from './component/pages/game/game.component';
+import { LoginComponent } from './component/pages/login/login.component';
+import { HomeComponent } from './component/pages/home/home.component';
+import { HelpComponent } from './component/pages/help/help.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GameComponent,
+    LoginComponent,
+    HomeComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,
