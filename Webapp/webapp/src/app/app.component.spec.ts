@@ -61,26 +61,4 @@ describe('AppComponent', () => {
 
     expect(mockApiService.getStatus).toHaveBeenCalledTimes(1);
   });
-
-  it('createGame should create a game', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
-
-    fixture.detectChanges();
-
-    component.createGame();
-
-    // TODO: test create game logic when implemented
-  });
-
-  it('joinGame properly join a game', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
-
-    fixture.detectChanges();
-
-    component.joinGame();
-
-    // TODO: test join game logic when implemented
-  })
 });
