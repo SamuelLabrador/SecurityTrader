@@ -8,10 +8,13 @@ import { ConfigurationService } from './services/configuration.service';
 import { WebSocketService } from './services/websocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from "@angular/material/button";
-import { GameComponent } from './component/pages/game/game.component';
-import { LoginComponent } from './component/pages/login/login.component';
-import { HomeComponent } from './component/pages/home/home.component';
-import { HelpComponent } from './component/pages/help/help.component';
+import { MatGridListModule } from "@angular/material/grid-list";
+import { GameComponent } from './pages/game/game.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { HelpComponent } from './pages/help/help.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,12 +23,15 @@ import { HelpComponent } from './component/pages/help/help.component';
     LoginComponent,
     HomeComponent,
     HelpComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatGridListModule,
+    FormsModule
   ],
   providers: [
     ApiService,

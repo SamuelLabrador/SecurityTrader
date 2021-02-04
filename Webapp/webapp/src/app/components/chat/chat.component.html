@@ -1,0 +1,9 @@
+<div class="chat-container">
+  <div>
+    <ul>
+      <li *ngFor="let item of messageList">{{item}}</li>
+    </ul>
+
+  </div>
+  <input [(ngModel)]="currentMessage" (keyup)="handleInput($event)">
+</div>

@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { ModelsRestServerStatus } from './fetch/api';
-import {By} from "@angular/platform-browser";
 
 describe('AppComponent', () => {
 
@@ -34,20 +33,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const debugElement = fixture.debugElement;
-
-    // Parse the component for the element that has the class '.t-title'
-    const titleElement = debugElement.query(By.css('.t-title'));
-
-    // Check that title is not null
-    expect(titleElement).toBeTruthy();
-    // Check that the title text is correct
-    expect(titleElement.nativeElement.innerHTML).toBe('Security Trader');
   });
 
   it('should make a request to get the status of the server', () => {
