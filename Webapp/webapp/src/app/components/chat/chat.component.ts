@@ -19,9 +19,8 @@ export class ChatComponent implements OnInit {
     this.currentMessage = '';
   }
 
-  handleInput(event: any) {
-    if (event.keyCode === 13 && this.currentMessage !== '') {
-      console.log('Enter has been pressed');
+  handleInput(event: KeyboardEvent) {
+    if (event.code === 'Enter' && this.currentMessage !== '') {
       this.messageList.push(this.currentMessage);
       this.currentMessage = '';
     }
