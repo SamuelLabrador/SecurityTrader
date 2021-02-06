@@ -1,19 +1,9 @@
-<!-- Toolbar -->
-<div class="toolbar">
+<!-- Navigation Bar -->
+<nav class="toolbar">
   <!-- TODO: Implement Sign In and connect href-->
-  <a mat-button href="" >Sign In</a>
+  <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
   <!-- TODO: Implement Help Page and connect href  -->
-  <a mat-button href="">Help</a>
-</div>
-
-<div class="content">
-
-  <div class="mat-display-4 title t-title">Security Trader</div>
-  <ul class="option-column">
-    <li><button mat-raised-button class='t-create-game-button' (click)="createGame()" color="primary">Create Game</button></li>
-    <li><button mat-raised-button class='t-join-game-button' (click)="joinGame()" color="primary">Join Game</button></li>
-  </ul>
-</div>
-
+  <a mat-button routerLink="/help" routerLinkActive="active">Help</a>
+</nav>
 
 <router-outlet></router-outlet>
