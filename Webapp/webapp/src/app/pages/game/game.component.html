@@ -1,0 +1,23 @@
+<div class="content">
+  <mat-grid-list cols="4" rows="5" rowHeight="160px">
+
+    <mat-grid-tile class="black-border" [colspan]="1" [rowspan]="1">
+      Player List
+    </mat-grid-tile>
+    <mat-grid-tile  class="black-border" [colspan]="3" [rowspan]="5">
+      <span class="game">
+        Game
+      </span>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="black-border" [colspan]="1" [rowspan]="2">
+      Game Settings
+    </mat-grid-tile>
+    <mat-grid-tile  class="black-border" [colspan]="1" [rowspan]="2">
+      <div class="chat-window">
+        <app-chat>
+        </app-chat>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

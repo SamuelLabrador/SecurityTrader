@@ -21,22 +21,4 @@ export class AppComponent {
   async getStatus() {
     const result = await this.apiService.getStatus();
   }
-
-  /**
-   * When Create Game button is clicked, this function
-   * handles the event
-   */
-  createGame() {
-    // TODO: Replace this with proper logging service
-    console.log('Creating game');
-  }
-
-  /**
-   * When Join Game button is clicked, this function
-   * handles the event
-   */
-  joinGame() {
-    // TODO: Replace this with proper logging service
-    console.log('Joining game');
-  }
 }
