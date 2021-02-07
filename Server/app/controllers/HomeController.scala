@@ -1,5 +1,6 @@
 package controllers
 
+import da.SecurityTraderDatabase
 import javax.inject._
 import play.api._
 import play.api.mvc._
@@ -9,7 +10,7 @@ import play.api.mvc._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()( val db: SecurityTraderDatabase, val controllerComponents: ControllerComponents) extends BaseController {
 
   /**
    * Create an Action to render an HTML page.
@@ -24,5 +25,10 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def createGame() = Action { implicit request: Request[AnyContent] =>
     Ok("created.")
+  }
+  //todo Remove this later
+  def updateDB() = Action { implicit request: Request[AnyContent] =>
+    db.updateSomething()
+    Ok("Database Updated")
   }
 }
