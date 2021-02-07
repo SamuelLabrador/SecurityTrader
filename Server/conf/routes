@@ -24,12 +24,33 @@ GET /docs/swagger-ui/*file          controllers.Assets.at(path:String="/public/l
 ### NoDocs ###
 GET /ws                             controllers.GameController.socket
 
-### Database Invocation ###
-### NoDocs ###
-GET /testDB                         controllers.HomeController.updateDB
+###
+#  summary: Creates user account
+#  description: User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+#  parameters:
+#    - name: body
+#      schema:
+#        $ref: '#/definitions/models.rest.CreateRequest'
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.rest.AuthResponse'
+###
+POST /auth/create                   controllers.AuthenticatorController.createUser
 
-### NoDocs ###
-POST /auth/create                     controllers.AuthenticatorController.createUser
 
-### NoDocs ###
-#POST /auth/login                     controllers.AuthenticatorController.
+###
+#  summary: Allows User to Log In
+#  description: When providing a valid email and password the user will be able to log in to their account.
+#  parameters:
+#    - name: body
+#      schema:
+#        $ref: '#/definitions/models.rest.LoginRequest'
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.rest.AuthResponse'
+###
+POST /auth/login                    controllers.AuthenticatorController.userLogin
