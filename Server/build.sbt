@@ -18,6 +18,7 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0
 libraryDependencies += "org.webjars" % "swagger-ui" % "3.35.0"
 libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "8.0.23",
+  "org.mindrot" % "jbcrypt" % "0.3m",
   "com.typesafe.akka" %% "akka-actor"  % AkkaVersion,
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
   "com.typesafe.akka" %% "akka-slf4j"  % AkkaVersion,

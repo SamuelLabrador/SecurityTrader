@@ -27,3 +27,9 @@ GET /ws                             controllers.GameController.socket
 ### Database Invocation ###
 ### NoDocs ###
 GET /testDB                         controllers.HomeController.updateDB
+
+### NoDocs ###
+POST /auth/create                     controllers.AuthenticatorController.createUser
+
+### NoDocs ###
+#POST /auth/login                     controllers.AuthenticatorController.
