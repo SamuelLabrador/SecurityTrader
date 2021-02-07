@@ -23,3 +23,7 @@ GET /docs/swagger-ui/*file          controllers.Assets.at(path:String="/public/l
 
 ### NoDocs ###
 GET /ws                             controllers.GameController.socket
+
+### Database Invocation ###
+### NoDocs ###
+GET /testDB                         controllers.HomeController.updateDB

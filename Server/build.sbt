@@ -17,6 +17,7 @@ libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 libraryDependencies += "org.webjars" % "swagger-ui" % "3.35.0"
 libraryDependencies ++= Seq(
+  "mysql" % "mysql-connector-java" % "8.0.23",
   "com.typesafe.akka" %% "akka-actor"  % AkkaVersion,
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
   "com.typesafe.akka" %% "akka-slf4j"  % AkkaVersion,
