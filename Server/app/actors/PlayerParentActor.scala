@@ -30,7 +30,9 @@ object PlayerParentActor extends ActorModule {
       Behaviors.logMessages {
         Behaviors.receiveMessage {
           case Create(id, replyTo) =>
-            val child = context.spawn(childFactory(), id)
+            val name = s"playerActor-$id"
+            val child = context.spawn(childFactory(id), name)
+            child ! PlayerActor.Connect(replyTo)
             Behaviors.same
         }
       }

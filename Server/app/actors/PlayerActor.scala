@@ -27,7 +27,7 @@ class PlayerActor()(implicit context: ActorContext[PlayerActor.Message]) {
   // Process the input
   private val jsonSink: Sink[JsValue, Future[Done]] = Sink.foreach { json =>
     // When the user types in a stock in the upper right corner, this is triggered,
-    print(json)
+    print(s"received json input $json\n")
   }
 
   /**
@@ -70,10 +70,10 @@ object PlayerActor {
   private case object InternalStop extends Message
 
   trait Factory {
-    def apply(): Behavior[Message]
+    def apply(id: String): Behavior[Message]
   }
 
-  def apply()(implicit mat: Materializer, ec: ExecutionContext): Behavior[Message] = {
+  def apply(id: String)(implicit mat: Materializer, ec: ExecutionContext): Behavior[Message] = {
     Behaviors.setup { implicit context =>
       implicit val scheduler: Scheduler = context.system.scheduler
       new PlayerActor().behavior

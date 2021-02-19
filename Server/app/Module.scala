@@ -1,9 +1,10 @@
+import javax.inject.{Inject, Provider, Singleton}
+
 import actors._
 import akka.stream.Materializer
 import com.google.inject.AbstractModule
 import play.api.libs.concurrent.AkkaGuiceSupport
 
-import javax.inject.{Inject, Provider, Singleton}
 import scala.concurrent.ExecutionContext
 
 class Module extends AbstractModule with AkkaGuiceSupport {
@@ -17,5 +18,5 @@ class Module extends AbstractModule with AkkaGuiceSupport {
 class PlayerActorFactoryProvider @Inject()(mat: Materializer,
                                            ec: ExecutionContext
                                           ) extends Provider[PlayerActor.Factory] {
-  def get() = PlayerActor()(mat, ec)
+  def get() = PlayerActor(_)(mat, ec)
 }

@@ -23,13 +23,13 @@ import scala.concurrent.{ExecutionContext, Future}
 class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Create],
                                 cc: ControllerComponents)
                                (implicit ec: ExecutionContext, scheduler: Scheduler)
-  extends AbstractController(cc) with SameOriginCheck {
+  extends AbstractController(cc) {
 
   val logger = play.api.Logger(getClass)
 
   def socket = WebSocket.acceptOrResult[JsValue, JsValue] {
-    case rh if sameOriginCheck(rh) =>
-      wsFutureFlow(rh).map { flow =>
+    case request =>
+      wsFutureFlow(request).map { flow =>
         Right(flow)
       }.recover {
         case e: Exception =>
@@ -37,11 +37,6 @@ class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Cr
           val jsError = Json.obj("error" -> "Cannot create websocket")
           val result = InternalServerError(jsError)
           Left(result)
-      }
-    case rejected =>
-      logger.error(s"Request ${rejected} failed same origin check")
-      Future.successful {
-        Left(Forbidden("forbidden"))
       }
   }
 
