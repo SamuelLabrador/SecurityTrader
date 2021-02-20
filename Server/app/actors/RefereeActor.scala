@@ -25,10 +25,11 @@ object RefereeActor {
     }
   }
 
+  /*
+  * Receive Messages
+  * */
   final case class AddPlayer(player: ActorRef[PlayerActor],
                              replyTo: ActorRef[PlayerAdded]) extends Message
-
-  final case class CreateGame(replyTo: ActorRef[String]) extends Message
 }
 
 class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Message])
@@ -46,7 +47,6 @@ class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Messa
       case AddPlayer(player, replyTo) =>
         log.debug(s"Adding player $player")
         playerList :+ player
-
         replyTo ! PlayerActor.PlayerAdded(true)
         this
     }
@@ -54,6 +54,7 @@ class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Messa
 
   override def onSignal: PartialFunction[Signal, Behavior[Message]] = {
     case PostStop =>
+      log.debug(s"Stopping referee actor ${context.self}")
       this
   }
 

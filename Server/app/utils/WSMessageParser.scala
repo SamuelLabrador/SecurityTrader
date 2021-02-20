@@ -1,6 +1,6 @@
 package utils
 
-import models.rest.{InternalWSMessage, WSMessage, WSMessageType, WSSendMessage}
+import models.rest.{InternalWSMessage, WSCreateGame, WSMessage, WSMessageType, WSSendMessage}
 import play.api.libs.json.JsValue
 
 object WSMessageParser {
@@ -12,6 +12,7 @@ object WSMessageParser {
 
     message.msgType match {
       case WSMessageType.SendMessage => message.data.asOpt[WSSendMessage]
+      case WSMessageType.CreateGame => Some(WSCreateGame())
       case _ => throw new Exception("Unknown WS Message Type")
     }
   }

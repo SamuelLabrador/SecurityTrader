@@ -4,17 +4,14 @@ import akka.actor.typed.scaladsl.AskPattern.Askable
 import akka.{Done, NotUsed}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Scheduler}
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
-import akka.pattern.pipe
 import akka.stream.Materializer
 import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Sink}
 import akka.util.Timeout
-import models.rest.WSSendMessage
+import models.rest.{WSCreateGame, WSSendMessage}
 import play.api.libs.json.JsValue
 import org.slf4j.Logger
 import utils.WSMessageParser
 
-import java.time.ZonedDateTime
-import javax.inject._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
 import scala.util.Try
@@ -25,13 +22,14 @@ object PlayerActor {
   private case object InternalStop extends Message
 
   trait Factory {
-    def apply(id: String): Behavior[Message]
+    def apply(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message]): Behavior[Message]
   }
 
-  def apply(id: String)(implicit mat: Materializer, ec: ExecutionContext): Behavior[Message] = {
+  def apply(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
+           (implicit mat: Materializer, ec: ExecutionContext): Behavior[Message] = {
     Behaviors.setup { implicit context =>
       implicit val scheduler: Scheduler = context.system.scheduler
-      new PlayerActor(id).behavior
+      new PlayerActor(id, refereeParentActor).behavior
     }
   }
 
@@ -39,14 +37,18 @@ object PlayerActor {
   final case class Connect(replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Message
   final case class PlayerAdded(success: Boolean) extends Message
   final case class CreateGame() extends Message
+  final case class RefereeAssignment(refereeActor: ActorRef[RefereeActor.Message]) extends Message
 }
 
-class PlayerActor (id: String) (implicit context: ActorContext[PlayerActor.Message],
-                                implicit val scheduler: Scheduler) {
+class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
+                  (implicit context: ActorContext[PlayerActor.Message], implicit val scheduler: Scheduler) {
   import PlayerActor._
 
   implicit val timeout: Timeout             = Timeout(50.millis)
   implicit val system: ActorSystem[Nothing] = context.system
+
+  var referee: Option[ActorRef[RefereeActor.Message]] = None
+
   val log: Logger = context.log
 
   val (hubSink, hubSource) = MergeHub.source[JsValue](perProducerBufferSize = 16)
@@ -67,9 +69,9 @@ class PlayerActor (id: String) (implicit context: ActorContext[PlayerActor.Messa
     // Match message
     parsedMessage match {
       case m: WSSendMessage => sendMessage(m)
-      case _ => {
+      case m: WSCreateGame => createGame(m)
+      case _ =>
         log.error(s"Unknown message received $parsedMessage")
-      }
     }
   }
 
@@ -94,12 +96,15 @@ class PlayerActor (id: String) (implicit context: ActorContext[PlayerActor.Messa
         log.info("A player has been added")
         Behaviors.same
       case BroadcastMessage(message) =>
-        context.log.info(s"Sending message: $message")
+        log.info(s"Sending message: $message")
+        Behaviors.same
+      case RefereeAssignment(referee) =>
+        log.info(s"Referee being assigned $referee")
+        this.referee = Some(referee)
         Behaviors.same
       case CreateGame() =>
-        context.log.info(s"Creating game")
-//        refereeParentActor.ask(replyTo => RefereeParentActor.Create(id, replyTo))
-
+        log.info(s"Creating game")
+        refereeParentActor ! RefereeParentActor.Create(id, context.self)
         Behaviors.same
       case InternalStop =>
         Behaviors.stopped
@@ -112,5 +117,9 @@ class PlayerActor (id: String) (implicit context: ActorContext[PlayerActor.Messa
 
   def sendMessage(msg: WSSendMessage): Unit = {
     log.debug(s"Received $msg")
+  }
+
+  def createGame(msg: WSCreateGame): Unit = {
+    context.self ! CreateGame()
   }
 }

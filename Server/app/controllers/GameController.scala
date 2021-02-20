@@ -10,8 +10,8 @@ import akka.actor.typed.scaladsl.AskPattern.Askable
 import akka.stream.scaladsl.Flow
 import akka.util.Timeout
 import models.rest.ServerStatus
+import play.api.Logger
 import play.api.libs.json.{JsValue, Json}
-import utils.SameOriginCheck
 
 import java.time.ZonedDateTime
 import java.net.InetAddress
@@ -26,7 +26,7 @@ class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Cr
                                (implicit ec: ExecutionContext, scheduler: Scheduler)
   extends AbstractController(cc) {
 
-  val logger = play.api.Logger(getClass)
+  val logger: Logger = play.api.Logger(getClass)
 
   def socket = WebSocket.acceptOrResult[JsValue, JsValue] {
     case request =>
@@ -50,16 +50,7 @@ class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Cr
     // Ask requires a timeout, if the timeout hits without response
     // the ask is failed with a TimeoutException
     implicit val timeout = Timeout(1.second) // the first run in dev can take a while :-(
-    playerParentActor.ask(replyTo => PlayerParentActor.Create(request.id.toString, replyTo))
-  }
-
-  def createGame = Action.async { implicit request: Request[AnyContent] =>
-    createRefereeActor(request).map(Ok(_))
-  }
-
-  private def createRefereeActor(request: RequestHeader): Future[String] = {
-    implicit val timeout = Timeout(1.second)
-    refereeParentActor.ask(replyTo => RefereeParentActor.Create(request.id.toString, replyTo))
+    playerParentActor.ask(replyTo => PlayerParentActor.Create(request.id.toString, refereeParentActor, replyTo))
   }
 
   /**

@@ -1,8 +1,12 @@
 package actors
 
 import akka.NotUsed
+import akka.actor.Scheduler
+import akka.actor.typed.receptionist.Receptionist
+import akka.actor.typed.scaladsl.AskPattern.Askable
 import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.{ ActorRef, Behavior }
+import akka.actor.typed.{ActorRef, Behavior}
+import akka.pattern.pipe
 import akka.stream.scaladsl.Flow
 import akka.util.Timeout
 import com.google.inject.Provides
@@ -19,7 +23,10 @@ import scala.concurrent.duration._
 object PlayerParentActor extends ActorModule {
   type Message = Create
 
-  final case class Create(id: String, replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]])
+  sealed trait Command
+  final case class Create(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message],
+                          replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Command
+  final case class ListingResponse(listing: Receptionist.Listing) extends Command
 
   @Provides def apply(childFactory: PlayerActor.Factory, configuration: Configuration)
                      (implicit ec: ExecutionContext): Behavior[Create] = {
@@ -29,9 +36,9 @@ object PlayerParentActor extends ActorModule {
     Behaviors.setup { context =>
       Behaviors.logMessages {
         Behaviors.receiveMessage {
-          case Create(id, replyTo) =>
+          case Create(id, refereeParentActor, replyTo) =>
             val name = s"playerActor-$id"
-            val child = context.spawn(childFactory(id), name)
+            val child = context.spawn(childFactory(id, refereeParentActor), name)
             child ! PlayerActor.Connect(replyTo)
             Behaviors.same
         }

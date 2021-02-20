@@ -1,6 +1,7 @@
 package actors
 
-import actors.RefereeActor.CreateGame
+import actors.PlayerActor.RefereeAssignment
+import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.actor.typed.{ActorRef, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
 import akka.util.Timeout
@@ -11,10 +12,13 @@ import play.api.libs.concurrent.ActorModule
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.DurationInt
 
+/**
+ * Manages the creation of referee actors
+ */
 object RefereeParentActor extends ActorModule {
   type Message = Create
 
-  final case class Create(id: String, replyTo: ActorRef[String])
+  final case class Create(id: String, replyTo: ActorRef[PlayerActor.Message])
 
   @Provides def apply(childFactory: RefereeActor.Factory, configuration: Configuration)
                      (implicit ec: ExecutionContext): Behavior[Create] = {
@@ -27,7 +31,8 @@ object RefereeParentActor extends ActorModule {
           case Create(id, replyTo) =>
             val name = s"refereeActor-$id"
             val child = context.spawn(childFactory(id), name)
-            child ! CreateGame(replyTo)
+            context.log.debug(s"Referee actor created with name $name")
+            replyTo ! RefereeAssignment(child)
             Behaviors.same
         }
       }

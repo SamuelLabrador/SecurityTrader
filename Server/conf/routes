@@ -27,6 +27,3 @@ GET /ws                             controllers.GameController.socket
 ### Database Invocation ###
 ### NoDocs ###
 GET /testDB                         controllers.HomeController.updateDB
-
-### NoDocs ###
-GET /api/create-game                controllers.GameController.createGame

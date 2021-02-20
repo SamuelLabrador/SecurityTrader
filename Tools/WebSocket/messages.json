@@ -1,0 +1,6 @@
+{
+    "msgType": "SendMessage",
+    "data": {
+        "message": "Hello World!"
+    }
+}

@@ -1,9 +1,10 @@
 package models.rest
 
-import play.api.libs.json.{JsValue, Json, OFormat}
+import play.api.libs.json.{JsObject, JsValue, Json, OFormat, OWrites, Reads}
 
 object WSMessageType {
   val SendMessage = "SendMessage"
+  val CreateGame = "CreateGame"
 }
 
 // This class is exposed to the public.
@@ -15,3 +16,6 @@ abstract class InternalWSMessage()
 
 case class WSSendMessage(message: String) extends InternalWSMessage
 object WSSendMessage { implicit val fmt: OFormat[WSSendMessage] = Json.format[WSSendMessage] }
+
+case class WSCreateGame() extends InternalWSMessage
+

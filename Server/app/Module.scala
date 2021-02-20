@@ -20,7 +20,7 @@ class Module extends AbstractModule with AkkaGuiceSupport {
 class PlayerActorFactoryProvider @Inject()(mat: Materializer,
                                            ec: ExecutionContext
                                           ) extends Provider[PlayerActor.Factory] {
-  def get() = PlayerActor(_)(mat, ec)
+  def get() = PlayerActor(_, _)(mat, ec)
 }
 
 @Singleton
