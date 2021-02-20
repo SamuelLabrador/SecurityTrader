@@ -10,7 +10,9 @@ import scala.concurrent.ExecutionContext
 class Module extends AbstractModule with AkkaGuiceSupport {
   override def configure(): Unit = {
     bindTypedActor(PlayerParentActor, "userParentActor")
+    bindTypedActor(RefereeParentActor, "refereeParentActor")
     bind(classOf[PlayerActor.Factory]).toProvider(classOf[PlayerActorFactoryProvider])
+    bind(classOf[RefereeActor.Factory]).toProvider(classOf[RefereeActorFactoryProvider])
   }
 }
 
@@ -19,4 +21,11 @@ class PlayerActorFactoryProvider @Inject()(mat: Materializer,
                                            ec: ExecutionContext
                                           ) extends Provider[PlayerActor.Factory] {
   def get() = PlayerActor(_)(mat, ec)
+}
+
+@Singleton
+class RefereeActorFactoryProvider @Inject()(mat: Materializer,
+                                            ec: ExecutionContext
+                                           ) extends Provider[RefereeActor.Factory] {
+  def get() = RefereeActor(_)(mat, ec)
 }

@@ -1,6 +1,6 @@
 package controllers
 
-import actors.PlayerParentActor
+import actors.{PlayerParentActor, RefereeParentActor}
 import akka.NotUsed
 
 import javax.inject._
@@ -21,6 +21,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Create],
+                                refereeParentActor: ActorRef[RefereeParentActor.Create],
                                 cc: ControllerComponents)
                                (implicit ec: ExecutionContext, scheduler: Scheduler)
   extends AbstractController(cc) {
@@ -50,6 +51,15 @@ class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Cr
     // the ask is failed with a TimeoutException
     implicit val timeout = Timeout(1.second) // the first run in dev can take a while :-(
     playerParentActor.ask(replyTo => PlayerParentActor.Create(request.id.toString, replyTo))
+  }
+
+  def createGame = Action.async { implicit request: Request[AnyContent] =>
+    createRefereeActor(request).map(Ok(_))
+  }
+
+  private def createRefereeActor(request: RequestHeader): Future[String] = {
+    implicit val timeout = Timeout(1.second)
+    refereeParentActor.ask(replyTo => RefereeParentActor.Create(request.id.toString, replyTo))
   }
 
   /**
