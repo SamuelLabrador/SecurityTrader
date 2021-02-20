@@ -1,14 +1,14 @@
 package actors
 
-import akka.actor.typed.scaladsl.AskPattern.Askable
 import akka.{Done, NotUsed}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Scheduler}
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.stream.Materializer
-import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Sink}
+import akka.stream.scaladsl.Source.actorRefWithAck
+import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Sink, Source}
 import akka.util.Timeout
-import models.rest.{WSCreateGame, WSSendMessage}
-import play.api.libs.json.JsValue
+import models.rest.{WSCreateGame, WSMessage, WSMessageType, InboxMessage, WSSendMessage}
+import play.api.libs.json.{JsObject, JsValue, Json}
 import org.slf4j.Logger
 import utils.WSMessageParser
 
@@ -33,8 +33,8 @@ object PlayerActor {
     }
   }
 
-  final case class BroadcastMessage(message: String) extends Message
   final case class Connect(replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Message
+  final case class BroadcastMessage(message: String) extends Message
   final case class PlayerAdded(success: Boolean) extends Message
   final case class CreateGame() extends Message
   final case class RefereeAssignment(refereeActor: ActorRef[RefereeActor.Message]) extends Message
@@ -97,6 +97,13 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
         Behaviors.same
       case BroadcastMessage(message) =>
         log.info(s"Sending message: $message")
+        // Prepare message data
+        val data= Json.toJson(InboxMessage(message))
+        val wsMessage = Json.toJson(WSMessage(WSMessageType.InboxMessage, data))
+        // Package data into Source
+        val source = Source(Seq(wsMessage))
+        // Send packaged data to output
+        source.runWith(hubSink)
         Behaviors.same
       case RefereeAssignment(referee) =>
         log.info(s"Referee being assigned $referee")
@@ -117,6 +124,7 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
 
   def sendMessage(msg: WSSendMessage): Unit = {
     log.debug(s"Received $msg")
+    context.self ! BroadcastMessage(msg.message)
   }
 
   def createGame(msg: WSCreateGame): Unit = {
