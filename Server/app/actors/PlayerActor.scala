@@ -4,11 +4,10 @@ import akka.{Done, NotUsed}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Scheduler}
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.stream.Materializer
-import akka.stream.scaladsl.Source.actorRefWithAck
 import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Sink, Source}
 import akka.util.Timeout
-import models.rest.{WSCreateGame, WSMessage, WSMessageType, InboxMessage, WSSendMessage}
-import play.api.libs.json.{JsObject, JsValue, Json}
+import models.rest.{WSBroadcastMessage, WSCreateGame, WSInboxMessage, WSJoinGame, WSMessage, WSMessageType}
+import play.api.libs.json.{JsValue, Json}
 import org.slf4j.Logger
 import utils.WSMessageParser
 
@@ -35,9 +34,9 @@ object PlayerActor {
 
   final case class Connect(replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Message
   final case class BroadcastMessage(message: String) extends Message
-  final case class PlayerAdded(success: Boolean) extends Message
   final case class CreateGame() extends Message
   final case class RefereeAssignment(refereeActor: ActorRef[RefereeActor.Message]) extends Message
+  final case class InboxMessage(message: String) extends Message
 }
 
 class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
@@ -68,8 +67,9 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
 
     // Match message
     parsedMessage match {
-      case m: WSSendMessage => sendMessage(m)
+      case m: WSBroadcastMessage => sendMessage(m)
       case m: WSCreateGame => createGame(m)
+      case m: WSJoinGame => joinGame(m)
       case _ =>
         log.error(s"Unknown message received $parsedMessage")
     }
@@ -92,27 +92,35 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
         log.info("Establishing websocket connection")
         replyTo ! websocketFlow
         Behaviors.same
-      case PlayerAdded(success) =>
-        log.info("A player has been added")
-        Behaviors.same
+
       case BroadcastMessage(message) =>
         log.info(s"Sending message: $message")
-        // Prepare message data
-        val data= Json.toJson(InboxMessage(message))
+
+        if (referee.isDefined) {
+          log.debug("Sending broadcast message to referee")
+          referee.get ! RefereeActor.BroadcastMessage(message)
+        } else
+          log.debug("No referee defined!")
+
+        Behaviors.same
+
+      case InboxMessage(message) =>
+        val data = Json.toJson(WSInboxMessage(message))
         val wsMessage = Json.toJson(WSMessage(WSMessageType.InboxMessage, data))
-        // Package data into Source
         val source = Source(Seq(wsMessage))
-        // Send packaged data to output
         source.runWith(hubSink)
         Behaviors.same
+
       case RefereeAssignment(referee) =>
-        log.info(s"Referee being assigned $referee")
+        log.info(s"Player assigned to referee: $referee")
         this.referee = Some(referee)
         Behaviors.same
+
       case CreateGame() =>
         log.info(s"Creating game")
         refereeParentActor ! RefereeParentActor.Create(id, context.self)
         Behaviors.same
+
       case InternalStop =>
         Behaviors.stopped
     }.receiveSignal {
@@ -122,12 +130,20 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     }
   }
 
-  def sendMessage(msg: WSSendMessage): Unit = {
+  def sendMessage(msg: WSBroadcastMessage): Unit = {
     log.debug(s"Received $msg")
     context.self ! BroadcastMessage(msg.message)
   }
 
   def createGame(msg: WSCreateGame): Unit = {
-    context.self ! CreateGame()
+    if (referee.isDefined) {
+      log.debug("Referee is already defined, not creating a game")
+    } else {
+      context.self ! CreateGame()
+    }
+  }
+
+  def joinGame(msg: WSJoinGame): Unit = {
+    log.debug(s"Joining game with message: $msg")
   }
 }

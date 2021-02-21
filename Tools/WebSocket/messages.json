@@ -1,6 +1,12 @@
-{
-    "msgType": "SendMessage",
-    "data": {
-        "message": "Hello World!"
+[
+    {
+        "msgType": "SendMessage",
+        "data": {
+            "message": "Hello World!"
+        }
+    },
+    {
+        "msgType": "CreateGame",
+        "data": {}
     }
-}
+]

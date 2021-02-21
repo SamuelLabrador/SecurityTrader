@@ -4,8 +4,9 @@ import play.api.libs.json.{JsObject, JsValue, Json, OFormat, OWrites, Reads}
 
 object WSMessageType {
   // To Server
-  val SendMessage = "SendMessage"
   val CreateGame = "CreateGame"
+  val JoinGame = "JoinGame"
+  val BroadcastMessage = "BroadcastMessage"
 
   // To Client
   val InboxMessage = "InboxMessage"
@@ -18,11 +19,15 @@ object WSMessage { implicit val fmt: OFormat[WSMessage] = Json.format[WSMessage]
 // This class is only for internal use. Should not be exposed to public.
 abstract class InternalWSMessage()
 
-case class WSSendMessage(message: String) extends InternalWSMessage
-object WSSendMessage { implicit val fmt: OFormat[WSSendMessage] = Json.format[WSSendMessage] }
-
-case class InboxMessage(message: String) extends InternalWSMessage
-object InboxMessage { implicit val fmt: OFormat[InboxMessage] = Json.format[InboxMessage] }
+case class WSBroadcastMessage(message: String) extends InternalWSMessage
+object WSBroadcastMessage { implicit val fmt: OFormat[WSBroadcastMessage] = Json.format[WSBroadcastMessage] }
 
 case class WSCreateGame() extends InternalWSMessage
+
+case class WSJoinGame(id: String) extends InternalWSMessage
+object WSJoinGame { implicit val fmt: OFormat[WSJoinGame] = Json.format[WSJoinGame] }
+
+case class WSInboxMessage(message: String) extends InternalWSMessage
+object WSInboxMessage { implicit val fmt: OFormat[WSInboxMessage] = Json.format[WSInboxMessage] }
+
 

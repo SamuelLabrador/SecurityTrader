@@ -1,6 +1,7 @@
 package actors
 
 import actors.PlayerActor.RefereeAssignment
+import actors.RefereeActor
 import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.actor.typed.{ActorRef, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
@@ -28,11 +29,11 @@ object RefereeParentActor extends ActorModule {
     Behaviors.setup { context =>
       Behaviors.logMessages {
         Behaviors.receiveMessage {
-          case Create(id, replyTo) =>
+          case Create(id, playerActor) =>
             val name = s"refereeActor-$id"
             val child = context.spawn(childFactory(id), name)
             context.log.debug(s"Referee actor created with name $name")
-            replyTo ! RefereeAssignment(child)
+            child ! RefereeActor.AddPlayer(playerActor, playerActor)
             Behaviors.same
         }
       }
