@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatGridList } from "@angular/material/grid-list";
-import {WebSocketService} from "../../services/websocket.service";
-import {ModelsRestWSCreateGame, WSMessageType} from "../../fetch/api";
+import { WebSocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-game',
@@ -12,12 +10,5 @@ export class GameComponent implements OnInit {
 
   constructor(private webSocketService: WebSocketService) { }
 
-  ngOnInit(): void {
-    const payload = {
-      msgType: WSMessageType.CreateGame,
-      data: {}
-    } as ModelsRestWSCreateGame;
-
-    this.webSocketService.webSocket.next(payload);
-  }
+  ngOnInit(): void { }
 }

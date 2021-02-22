@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
-import {ConfigurationService} from './configuration.service';
-import {WSMessage, WSMessageType} from "../fetch/api";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { ConfigurationService } from './configuration.service';
+import { WSMessage, WSMessageType } from '../fetch/api';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class WebSocketService {
     );
 
     // Websocket closes if no message is received.
-    // Send ping to server every 50 seconds to keep connection alive
+    // Send ping to server every 60 seconds to keep connection alive
     setInterval(() => {
       const pingData = {
         msgType: WSMessageType.PingMessage,
@@ -37,10 +37,10 @@ export class WebSocketService {
       } as WSMessage;
 
       this.webSocket.next(pingData);
-    }, 60 * 1000)
+    }, 60 * 1000);
   }
 
-  getInstance(): WebSocketSubject<unknown> {
-    return this.webSocket;
+  sendMessage(payload: any): void {
+    this.webSocket.next(payload);
   }
 }
