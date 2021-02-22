@@ -1,5 +1,6 @@
 package actors
 
+import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Signal}
 import akka.stream.Materializer
@@ -12,14 +13,15 @@ import scala.concurrent.duration.DurationInt
 object RefereeActor {
   sealed trait Message
 
-  private case object InternalStop extends Message
-
   trait Factory {
     def apply(id: String): Behavior[Message]
   }
 
   def apply(id: String)(implicit mat: Materializer, ec: ExecutionContext): Behavior[Message] = {
     Behaviors.setup { implicit context =>
+      // Setup service key for future discovery
+      val RefereeActorServiceKey = ServiceKey[Message](id)
+      context.system.receptionist ! Receptionist.Register(RefereeActorServiceKey, context.self)
       new RefereeActor(id)
     }
   }
@@ -32,6 +34,13 @@ object RefereeActor {
   final case class BroadcastMessage(message: String) extends Message
 }
 
+/**
+ * The RefereeActor manages the state of the game.
+ * It tracks the players and rounds.
+ *
+ * @param id Unique ID to track the referee actor
+ * @param context context for internal usage
+ */
 class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Message])
     extends AbstractBehavior[RefereeActor.Message](context) {
   import RefereeActor._
@@ -40,11 +49,21 @@ class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Messa
   implicit val system: ActorSystem[Nothing] = context.system
   val log: Logger = context.log
 
+
   var playerList: scala.collection.mutable.Seq[ActorRef[PlayerActor.Message]] =
     scala.collection.mutable.Seq.empty[ActorRef[PlayerActor.Message]]
 
+
+  /**
+   * Meat and potatoes of the RefereeActor. Primary logic.
+   * Will handle interactions between player and the system.
+   *
+   * @param msg Message telling the referee actor what to do
+   * @return
+   */
   override def onMessage(msg: Message): Behavior[Message] = {
     msg match {
+
       case AddPlayer(player, replyTo) =>
         log.debug(s"Adding player $player")
         playerList = playerList :+ player
@@ -53,7 +72,6 @@ class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Messa
 
       case BroadcastMessage(message) =>
         log.debug("Referee received broadcasting message")
-        log.debug(s"Player list $playerList")
         playerList.foreach( p => {
           log.debug(s"Sending message $message to $p")
           p ! PlayerActor.InboxMessage(message)
@@ -67,5 +85,4 @@ class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Messa
       log.debug(s"Stopping referee actor ${context.self}")
       this
   }
-
 }

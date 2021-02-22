@@ -1,5 +1,6 @@
 package actors
 
+import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.{Done, NotUsed}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Scheduler}
 import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
@@ -40,22 +41,32 @@ object PlayerActor {
   final case class InboxMessage(message: String) extends Message
 }
 
+/**
+ * The player actor handles the player's WebSocket connection
+ *
+ * @param id unique id so this actor can be discovered
+ * @param refereeParentActor referee parent actor. Allows for user to create games
+ * @param context context of actor. for internal usage
+ * @param scheduler system scheduler. Gives guidance for how to handle incoming messages
+ */
 class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
                   (implicit context: ActorContext[PlayerActor.Message], implicit val scheduler: Scheduler) {
   import PlayerActor._
 
   implicit val timeout: Timeout             = Timeout(50.millis)
   implicit val system: ActorSystem[Nothing] = context.system
+  val log: Logger = context.log
 
   var referee: Option[ActorRef[RefereeActor.Message]] = None
 
-  val log: Logger = context.log
-
-  val (hubSink, hubSource) = MergeHub.source[JsValue](perProducerBufferSize = 16)
-    .toMat(BroadcastHub.sink(bufferSize = 256))(Keep.both)
-    .run()
-
-  // Process the input
+  /**
+   * Processes raw input from the websocket connection and directs the input accordingly
+   *
+   *  |-----------|       |------------|        |------------|
+   *  |    raw    |       |  jsonSink  |        |   class    |
+   *  |   input   | ====> |            | ====>  |  function  |
+   *  |-----------|       |------------|        |------------|
+   */
   private val jsonSink: Sink[JsValue, Future[Done]] = Sink.foreach { json =>
     // When the user types in a stock in the upper right corner, this is triggered,
     log.debug(s"received json input $json")
@@ -65,7 +76,7 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
 
       case Some(message) =>
         message match {
-          case m: WSBroadcastMessage => sendMessage(m)
+          case m: WSBroadcastMessage => broadcastMessage(m)
           case m: WSCreateGame => createGame(m)
           case m: WSJoinGame => joinGame(m)
           case m: WSPing => onPing(m)
@@ -78,17 +89,11 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     }
   }
 
-  private lazy val websocketFlow: Flow[JsValue, JsValue, NotUsed] = {
-    // Put the source and sink together to make a flow of hub source as output (aggregating all
-    // stocks as JSON to the browser) and the actor as the sink (receiving any JSON messages
-    // from the browse), using a coupled sink and source.
-    Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination() { (_, termination) =>
-      // When the flow shuts down, make sure this actor also stops.
-      context.pipeToSelf(termination)((_: Try[Done]) => InternalStop)
-      NotUsed
-    }
-  }
 
+  /**
+   * Meat and potatoes. Central logic. Processes messages.
+   * Sends messages to and from the player (webapp) and the referee
+   */
   def behavior: Behavior[Message] = {
     Behaviors.receiveMessage[Message] {
       case Connect(replyTo) =>
@@ -108,9 +113,13 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
         Behaviors.same
 
       case InboxMessage(message) =>
+        // Messages sent to the webapp need to be converted to JSON format
+        // and encapsulated in Source
         val data = Json.toJson(WSInboxMessage(message))
         val wsMessage = Json.toJson(WSMessage(WSMessageType.InboxMessage, data))
         val source = Source(Seq(wsMessage))
+
+        // Send payload to client
         source.runWith(hubSink)
         Behaviors.same
 
@@ -121,6 +130,7 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
 
       case CreateGame() =>
         log.info(s"Creating game")
+        // Make a request to the referee parent actor to create a referee for the player
         refereeParentActor ! RefereeParentActor.Create(id, context.self)
         Behaviors.same
 
@@ -141,11 +151,25 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     }
   }
 
-  def sendMessage(msg: WSBroadcastMessage): Unit = {
+  /*
+  * Functions for handling messages from player
+  * */
+
+  /**
+   * Broadcasts a message to the other users in the game
+   *
+   * @param msg the parsed WSBroadcastMessage
+   */
+  def broadcastMessage(msg: WSBroadcastMessage): Unit = {
     log.debug(s"Received $msg")
     context.self ! BroadcastMessage(msg.message)
   }
 
+  /**
+   * Creates a game. Games are defined by the referee
+   *
+   * @param msg the parsed WSCreateGame message
+   */
   def createGame(msg: WSCreateGame): Unit = {
     if (referee.isDefined) {
       log.debug("Referee is already defined, not creating a game")
@@ -154,11 +178,42 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     }
   }
 
+  /**
+   * Joins a game
+   *
+   * @param msg the parsed WSJoinGame message
+   */
   def joinGame(msg: WSJoinGame): Unit = {
     log.debug(s"Joining game with message: $msg")
+
+    // Construct service key
+    val RefereeActorServiceKey = ServiceKey[RefereeActor.Message](id)
+    // TODO: Implement logic
   }
 
+
+  /**
+   * Sends Ping. Used to keep WebSocket connection alive.
+   *
+   * @param msg the parsed WSPing message
+   */
   def onPing(msg: WSPing): Unit = {
     context.self ! Ping()
+  }
+
+  /* WebSocket Flow Setup */
+  val (hubSink, hubSource) = MergeHub.source[JsValue](perProducerBufferSize = 16)
+    .toMat(BroadcastHub.sink(bufferSize = 256))(Keep.both)
+    .run()
+
+  private lazy val websocketFlow: Flow[JsValue, JsValue, NotUsed] = {
+    // Put the source and sink together to make a flow of hub source as output (aggregating all
+    // stocks as JSON to the browser) and the actor as the sink (receiving any JSON messages
+    // from the browse), using a coupled sink and source.
+    Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination() { (_, termination) =>
+      // When the flow shuts down, make sure this actor also stops.
+      context.pipeToSelf(termination)((_: Try[Done]) => InternalStop)
+      NotUsed
+    }
   }
 }

@@ -20,5 +20,4 @@ export class GameComponent implements OnInit {
 
     this.webSocketService.webSocket.next(payload);
   }
-
 }
