@@ -32,6 +32,14 @@ components:
       $ref: '#/components/schemas/models.rest.WSInboxMessage'
       type: 'object'
 
+    WSPing:
+      $ref: '#/components/schemas/models.rest.WSPing'
+      type: 'object'
+
+    WSPongMessage:
+      $ref: '#/components/schemas/models.rest.WSPongMessage'
+      type: 'object'
+
     WSMessageType:
       type: string
       enum:
@@ -39,3 +47,5 @@ components:
         - JoinGame
         - BroadcastMessage
         - InboxMessage
+        - PingMessage
+        - PongMessage

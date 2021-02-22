@@ -6,7 +6,7 @@ import akka.actor.typed.scaladsl.{ActorContext, Behaviors}
 import akka.stream.Materializer
 import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Sink, Source}
 import akka.util.Timeout
-import models.rest.{WSBroadcastMessage, WSCreateGame, WSInboxMessage, WSJoinGame, WSMessage, WSMessageType}
+import models.rest.{WSBroadcastMessage, WSCreateGame, WSInboxMessage, WSJoinGame, WSMessage, WSMessageType, WSPing, WSPongMessage}
 import play.api.libs.json.{JsValue, Json}
 import org.slf4j.Logger
 import utils.WSMessageParser
@@ -32,6 +32,7 @@ object PlayerActor {
     }
   }
 
+  final case class Ping() extends Message
   final case class Connect(replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Message
   final case class BroadcastMessage(message: String) extends Message
   final case class CreateGame() extends Message
@@ -60,18 +61,20 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     log.debug(s"received json input $json")
 
     // Get WS Message
-    val parsedMessage = WSMessageParser.parse(json) match {
-      case Some(message) => message
-      case _ => throw new Exception(s"Could not parse json $json")
-    }
+    WSMessageParser.parse(json) match {
 
-    // Match message
-    parsedMessage match {
-      case m: WSBroadcastMessage => sendMessage(m)
-      case m: WSCreateGame => createGame(m)
-      case m: WSJoinGame => joinGame(m)
+      case Some(message) =>
+        message match {
+          case m: WSBroadcastMessage => sendMessage(m)
+          case m: WSCreateGame => createGame(m)
+          case m: WSJoinGame => joinGame(m)
+          case m: WSPing => onPing(m)
+          case _ =>
+            log.error(s"Unknown message received $message")
+        }
+
       case _ =>
-        log.error(s"Unknown message received $parsedMessage")
+        log.error(s"Could not parse json $json")
     }
   }
 
@@ -121,6 +124,14 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
         refereeParentActor ! RefereeParentActor.Create(id, context.self)
         Behaviors.same
 
+      case Ping() =>
+        log.info(s"Received ping, sending pong")
+        val data = Json.toJson(WSPongMessage(true))
+        val wsMessage = Json.toJson(WSMessage(WSMessageType.PongMessage, data))
+        val source = Source(Seq(wsMessage))
+        source.runWith(hubSink)
+        Behaviors.same
+
       case InternalStop =>
         Behaviors.stopped
     }.receiveSignal {
@@ -145,5 +156,9 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
 
   def joinGame(msg: WSJoinGame): Unit = {
     log.debug(s"Joining game with message: $msg")
+  }
+
+  def onPing(msg: WSPing): Unit = {
+    context.self ! Ping()
   }
 }
