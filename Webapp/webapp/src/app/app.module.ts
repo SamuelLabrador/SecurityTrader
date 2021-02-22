@@ -15,6 +15,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { HelpComponent } from './pages/help/help.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -29,10 +31,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
         MatButtonModule,
         MatGridListModule,
-        FormsModule,
-        ReactiveFormsModule
+        MatIconModule,
+        MatInputModule
     ],
   providers: [
     ApiService,

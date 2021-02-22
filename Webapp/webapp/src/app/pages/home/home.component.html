@@ -6,9 +6,14 @@
               color="primary" (click)="createGame();">Create Game</button>
     </li>
     <li>
-      <input matInput type="text" [formControl]="gameID">
-      <button mat-raised-button class='t-join-game-button'
-              color="primary" (click)="joinGame();">Join Game</button>
+      <mat-form-field class="t-game-code-form-field">
+        <mat-label>Join Game</mat-label>
+        <input matInput placeholder="Game Code" type="text" [formControl]="gameID">
+      </mat-form-field>
+      <button mat-mini-fab class='t-join-game-button'
+              color="primary" (click)="joinGame();">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
     </li>
   </ul>
 </div>
