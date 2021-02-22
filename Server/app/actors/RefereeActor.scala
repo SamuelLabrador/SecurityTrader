@@ -29,8 +29,7 @@ object RefereeActor {
   /*
   * Receive Messages
   * */
-  final case class AddPlayer(player: ActorRef[PlayerActor.Message],
-                             replyTo: ActorRef[PlayerActor.Message]) extends Message
+  final case class JoinRequest(replyTo: ActorRef[PlayerActor.Message]) extends Message
   final case class BroadcastMessage(message: String) extends Message
 }
 
@@ -64,9 +63,9 @@ class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Messa
   override def onMessage(msg: Message): Behavior[Message] = {
     msg match {
 
-      case AddPlayer(player, replyTo) =>
-        log.debug(s"Adding player $player")
-        playerList = playerList :+ player
+      case JoinRequest(replyTo) =>
+        log.debug(s"Adding player $replyTo")
+        playerList = playerList :+ replyTo
         replyTo ! PlayerActor.RefereeAssignment(context.self)
         this
 

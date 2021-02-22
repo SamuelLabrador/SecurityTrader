@@ -8,5 +8,11 @@
     {
         "msgType": "CreateGame",
         "data": {}
+    },
+    {
+      "msgType": "JoinGame",
+      "data": {
+        "id": "7"
+      }
     }
 ]

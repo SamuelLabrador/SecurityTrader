@@ -39,6 +39,7 @@ object PlayerActor {
   final case class CreateGame() extends Message
   final case class RefereeAssignment(refereeActor: ActorRef[RefereeActor.Message]) extends Message
   final case class InboxMessage(message: String) extends Message
+  final case class ListingResponse(listing: Receptionist.Listing) extends Message
 }
 
 /**
@@ -56,8 +57,11 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
   implicit val timeout: Timeout             = Timeout(50.millis)
   implicit val system: ActorSystem[Nothing] = context.system
   val log: Logger = context.log
+  val listingResponseAdapter = context.messageAdapter[Receptionist.Listing](ListingResponse)
+
 
   var referee: Option[ActorRef[RefereeActor.Message]] = None
+  var refereeActorServiceKey: ServiceKey[RefereeActor.Message] = null
 
   /**
    * Processes raw input from the websocket connection and directs the input accordingly
@@ -142,6 +146,20 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
         source.runWith(hubSink)
         Behaviors.same
 
+      case ListingResponse(listing) =>
+        if (listing.isForKey(this.refereeActorServiceKey)) {
+          log.debug("Found referee!")
+          val result = listing.allServiceInstances(this.refereeActorServiceKey)
+          print(listing)
+          if (result.size > 1)
+            log.error("More than one referee found!")
+          else {
+            result.head ! RefereeActor.JoinRequest(context.self)
+          }
+        }
+
+        Behaviors.same
+
       case InternalStop =>
         Behaviors.stopped
     }.receiveSignal {
@@ -187,10 +205,9 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     log.debug(s"Joining game with message: $msg")
 
     // Construct service key
-    val RefereeActorServiceKey = ServiceKey[RefereeActor.Message](id)
-    // TODO: Implement logic
+    this.refereeActorServiceKey = ServiceKey[RefereeActor.Message](msg.id)
+    context.system.receptionist ! Receptionist.Find(this.refereeActorServiceKey, listingResponseAdapter)
   }
-
 
   /**
    * Sends Ping. Used to keep WebSocket connection alive.

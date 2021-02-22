@@ -33,7 +33,7 @@ object RefereeParentActor extends ActorModule {
             val name = s"refereeActor-$id"
             val child = context.spawn(childFactory(id), name)
             context.log.debug(s"Referee actor created with name $name")
-            child ! RefereeActor.AddPlayer(playerActor, playerActor)
+            child ! RefereeActor.JoinRequest(playerActor)
             Behaviors.same
         }
       }

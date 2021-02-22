@@ -1,9 +1,9 @@
 #!/bin/bash
 
-Download every time in case swagger.json changes.
+# Download every time in case swagger.json changes.
 curl "http://localhost:9000/assets/swagger.json" -o ./swagger.json
 
-if [ -f ./swagger-codegen-cli.jar ]; 
+if [ ! -f ./swagger-codegen-cli.jar ]; 
 then
   echo "Downloading swagger-codegen-cli.jar for client codegen"
   curl "https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.24/swagger-codegen-cli-3.0.24.jar" -o swagger-codegen-cli.jar

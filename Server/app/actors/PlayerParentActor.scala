@@ -26,7 +26,6 @@ object PlayerParentActor extends ActorModule {
   sealed trait Command
   final case class Create(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message],
                           replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Command
-  final case class ListingResponse(listing: Receptionist.Listing) extends Command
 
   @Provides def apply(childFactory: PlayerActor.Factory, configuration: Configuration)
                      (implicit ec: ExecutionContext): Behavior[Create] = {
