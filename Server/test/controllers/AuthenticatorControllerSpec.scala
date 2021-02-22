@@ -15,7 +15,7 @@ class AuthenticatorControllerSpec extends PlaySpec
   // TODO understand if it is better to make a test method for each method
   // TODO perhaps methods are not allowed
 
-    "createUser" should {
+  /*  "createUser" should {
       "Should return the value of the created user " in {
         val mockDataBaseInterface = mock[]
         val controller             = new AuthenticatorController( , Helpers.stubControllerComponents())
@@ -23,6 +23,6 @@ class AuthenticatorControllerSpec extends PlaySpec
         val bodyText: String       = contentAsString(result)
         bodyText mustBe "ok"
       }
-    }
+    }*/
 
 }
