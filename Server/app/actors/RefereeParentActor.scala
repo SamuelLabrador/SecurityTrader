@@ -1,8 +1,5 @@
 package actors
 
-import actors.PlayerActor.RefereeAssignment
-import actors.RefereeActor
-import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.actor.typed.{ActorRef, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
 import akka.util.Timeout

@@ -57,11 +57,11 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
   implicit val timeout: Timeout             = Timeout(50.millis)
   implicit val system: ActorSystem[Nothing] = context.system
   val log: Logger = context.log
-  val listingResponseAdapter = context.messageAdapter[Receptionist.Listing](ListingResponse)
-
+  val listingResponseAdapter: ActorRef[Receptionist.Listing] =
+    context.messageAdapter[Receptionist.Listing](ListingResponse)
 
   var referee: Option[ActorRef[RefereeActor.Message]] = None
-  var refereeActorServiceKey: ServiceKey[RefereeActor.Message] = null
+  var refereeActorServiceKey: Option[ServiceKey[RefereeActor.Message]] = None
 
   /**
    * Processes raw input from the websocket connection and directs the input accordingly
@@ -147,10 +147,11 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
         Behaviors.same
 
       case ListingResponse(listing) =>
-        if (listing.isForKey(this.refereeActorServiceKey)) {
+        val key = this.refereeActorServiceKey
+          .getOrElse(throw new Exception("Addressing listing response with no key"))
+        if (listing.isForKey(key)) {
           log.debug("Found referee!")
-          val result = listing.allServiceInstances(this.refereeActorServiceKey)
-          print(listing)
+          val result = listing.allServiceInstances(key)
           if (result.size > 1)
             log.error("More than one referee found!")
           else {
@@ -169,9 +170,9 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     }
   }
 
-  /*
+  /**
   * Functions for handling messages from player
-  * */
+  */
 
   /**
    * Broadcasts a message to the other users in the game
@@ -205,8 +206,8 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     log.debug(s"Joining game with message: $msg")
 
     // Construct service key
-    this.refereeActorServiceKey = ServiceKey[RefereeActor.Message](msg.id)
-    context.system.receptionist ! Receptionist.Find(this.refereeActorServiceKey, listingResponseAdapter)
+    this.refereeActorServiceKey = Some(ServiceKey[RefereeActor.Message](msg.id))
+    context.system.receptionist ! Receptionist.Find(this.refereeActorServiceKey.get, listingResponseAdapter)
   }
 
   /**

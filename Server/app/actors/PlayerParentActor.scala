@@ -1,12 +1,8 @@
 package actors
 
 import akka.NotUsed
-import akka.actor.Scheduler
-import akka.actor.typed.receptionist.Receptionist
-import akka.actor.typed.scaladsl.AskPattern.Askable
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, Behavior}
-import akka.pattern.pipe
 import akka.stream.scaladsl.Flow
 import akka.util.Timeout
 import com.google.inject.Provides
@@ -30,7 +26,7 @@ object PlayerParentActor extends ActorModule {
   @Provides def apply(childFactory: PlayerActor.Factory, configuration: Configuration)
                      (implicit ec: ExecutionContext): Behavior[Create] = {
 
-    implicit val timeout = Timeout(2.seconds)
+    implicit val timeout: Timeout = Timeout(2.seconds)
 
     Behaviors.setup { context =>
       Behaviors.logMessages {
