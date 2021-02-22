@@ -7,6 +7,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, SwaggerPlugin)
 
 scalaVersion := "2.13.3"
 
+swaggerV3 := true
+
 val AkkaVersion = "2.6.11"
 
 libraryDependencies += guice

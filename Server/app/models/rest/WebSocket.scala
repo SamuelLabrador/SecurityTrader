@@ -1,6 +1,6 @@
 package models.rest
 
-import play.api.libs.json.{JsObject, JsValue, Json, OFormat, OWrites, Reads}
+import play.api.libs.json.{JsValue, Json, OFormat}
 
 object WSMessageType {
   // To Server
@@ -29,5 +29,3 @@ object WSJoinGame { implicit val fmt: OFormat[WSJoinGame] = Json.format[WSJoinGa
 
 case class WSInboxMessage(message: String) extends InternalWSMessage
 object WSInboxMessage { implicit val fmt: OFormat[WSInboxMessage] = Json.format[WSInboxMessage] }
-
-

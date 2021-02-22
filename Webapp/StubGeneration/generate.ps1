@@ -3,7 +3,7 @@ Invoke-WebRequest -Uri "http://localhost:9000/assets/swagger.json" -OutFile swag
 
 if (!(Test-Path -Path ./swagger-codegen-cli.jar)) {
   Write-Output "Downloading swagger-codegen-cli.jar for client codegen"
-  Invoke-WebRequest -Uri "https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.18/swagger-codegen-cli-2.4.18.jar" -OutFile swagger-codegen-cli.jar
+  Invoke-WebRequest -Uri "https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.24/swagger-codegen-cli-3.0.24.jar" -OutFile swagger-codegen-cli.jar
 }
 
 java -jar .\swagger-codegen-cli.jar generate `
