@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WebSocketService } from '../../services/websocket.service';
+import { ModelsRestWSBroadcastMessage, ModelsRestWSInboxMessage, WSMessage, WSMessageType } from '../../fetch/api';
 
 @Component({
   selector: 'app-chat',
@@ -8,21 +10,37 @@ import { Component, OnInit } from '@angular/core';
 export class ChatComponent implements OnInit {
 
   messageList: string[] = [];
-  currentMessage = ''
+  currentMessage = '';
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private ws: WebSocketService) {
+    ws.chatObservable.subscribe( chatMessage => this.handleMessage(chatMessage.data) );
   }
 
-  clearValue() {
+  ngOnInit(): void { }
+
+  clearValue(): void {
     this.currentMessage = '';
   }
 
-  handleInput(event: KeyboardEvent) {
+  handleMessage(message: ModelsRestWSInboxMessage): void {
+    this.messageList.push(message.message);
+  }
+
+  handleInput(event: KeyboardEvent): void {
     if (event.code === 'Enter' && this.currentMessage !== '') {
-      this.messageList.push(this.currentMessage);
+      this.sendMessage(this.currentMessage);
       this.currentMessage = '';
     }
+  }
+
+  sendMessage(message: string): void {
+    const data = {
+      msgType: WSMessageType.BroadcastMessage,
+      data: {
+        message
+      } as ModelsRestWSBroadcastMessage
+    } as WSMessage;
+
+    this.ws.webSocket.next(data);
   }
 }

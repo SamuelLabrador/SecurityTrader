@@ -3,13 +3,17 @@
   <ul class="option-column">
     <li>
       <button mat-raised-button class='t-create-game-button'
-              routerLink="/game" routerLinkActive="true"
-              color="primary">Create Game</button>
+              color="primary" (click)="createGame();">Create Game</button>
     </li>
     <li>
-      <button mat-raised-button class='t-join-game-button'
-              routerLink="/game" routerLinkActive="true"
-              color="primary">Join Game</button>
+      <mat-form-field class="t-game-code-form-field">
+        <mat-label>Join Game</mat-label>
+        <input matInput placeholder="Game Code" type="text" [formControl]="gameID">
+      </mat-form-field>
+      <button mat-mini-fab class='t-join-game-button'
+              color="primary" (click)="joinGame();">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
     </li>
   </ul>
 </div>

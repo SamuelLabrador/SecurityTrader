@@ -16,12 +16,18 @@ class DatabaseExecutionContext @Inject()(system: ActorSystem)
 // Singleton allows for only one instance of class
 @Singleton
 class SecurityTraderDatabase @Inject() (db: Database) (implicit ec: ExecutionContext) {
-  def updateSomething(): Unit = {
+  def updateSomething(): Future[Unit] = {
     Future {
-      db.withConnection { conn =>
+      val result = db.withConnection { conn =>
         // Establish connection with database and create Statement object for query usage
         val statement = conn.createStatement()
-        // statement.executeUpdate("INSERT INTO User (email, username, password, isMod) VALUES ('temp@gmail.com', 'temp', 'temppswd', 0)")
+
+        val rowsUpdate = statement.executeUpdate("INSERT INTO User " +
+          "(email, username, password, isMod) " +
+          "VALUES ('temp@gmail.com', 'temp', 'temppswd', 0)"
+        )
+
+        statement.executeQuery("SELECT * FROM User WHERE 1")
       }
     }
   }

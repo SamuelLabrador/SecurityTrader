@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatGridList } from "@angular/material/grid-list";
+import { WebSocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-game',
@@ -8,9 +8,7 @@ import { MatGridList } from "@angular/material/grid-list";
 })
 export class GameComponent implements OnInit {
 
-  constructor() { }
+  constructor(private webSocketService: WebSocketService) { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

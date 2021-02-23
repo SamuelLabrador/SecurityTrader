@@ -10,7 +10,7 @@ export class ConfigurationService {
 
   constructor() {
     this.production = false;
-    this.serverUrl = 'https://localhost:9443';
-    this.wsUrl = 'ws://localhost:9443/ws';
+    this.serverUrl = 'http://localhost:9000';
+    this.wsUrl = 'ws://localhost:9000/ws';
   }
 }

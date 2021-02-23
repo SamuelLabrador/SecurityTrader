@@ -3,3 +3,7 @@ WebappStub/
 
 # Files
 swagger-codegen-cli.jar
+
+# IDE Files
+.vscode/
+.metals/
