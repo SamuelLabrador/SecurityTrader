@@ -17,6 +17,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { SignupComponent } from './pages/signup/signup.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     HelpComponent,
     ChatComponent,
+    SignupComponent,
   ],
     imports: [
         BrowserModule,
@@ -33,6 +36,7 @@ import { MatIconModule } from '@angular/material/icon';
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
+        MatCardModule,
         MatButtonModule,
         MatGridListModule,
         MatIconModule,

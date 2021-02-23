@@ -3,6 +3,8 @@ WebappStub/
 
 # Files
 swagger-codegen-cli.jar
+Webapp/StubGeneration/swagger.json
+Webapp/webapp/angular.json
 
 # IDE Files
 .vscode/

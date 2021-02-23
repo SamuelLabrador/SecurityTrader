@@ -1,1 +1,25 @@
-<p>login works!</p>
+<div class="content">
+  <div class="mat-title welcome">Welcome to Security Trader</div>
+  <mat-card class="authentication" >
+    <mat-card-content class="cardContent">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions class="cardButton">
+      <button mat-raised-button type="submit" color="primary">Login</button>
+    </mat-card-actions>
+  </mat-card>
+  <div class="footer">
+    Don't Have an account?
+    <button mat-raised-button type="button" color="primary">Create Account</button>
+  </div>
+</div>
