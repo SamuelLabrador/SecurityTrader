@@ -27,28 +27,6 @@ describe('ChatComponent', () => {
     component.clearValue();
 
     expect(component.currentMessage).toBe('');
-  })
+  });
 
-  it('should add a message to the queue when "enter" is pressed', () => {
-    const testMessage = 'hello world';
-    component.currentMessage = testMessage;
-
-    // Send enter keystroke event
-    component.handleInput(new KeyboardEvent('keystroke', {code: 'Enter'}));
-
-    expect(component.currentMessage).toBe('');
-    expect(component.messageList[0]).toBe(testMessage);
-  })
-
-  it('should not invoke clearValue() when a key that is not "enter" is pressed', () => {
-    const testMessage = 'hello world';
-    component.currentMessage = testMessage;
-
-    component.handleInput(new KeyboardEvent('keystroke', {code: 'Backspace'}));
-
-    expect(component.currentMessage).toBe(testMessage);
-    expect(component.messageList.length).toBe(0);
-
-
-  })
 });

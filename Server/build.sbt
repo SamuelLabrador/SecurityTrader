@@ -7,6 +7,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, SwaggerPlugin)
 
 scalaVersion := "2.13.3"
 
+swaggerV3 := true
+
 val AkkaVersion = "2.6.11"
 
 libraryDependencies += guice
@@ -21,7 +23,6 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m",
   "com.typesafe.akka" %% "akka-actor"  % AkkaVersion,
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
-  "com.typesafe.akka" %% "akka-slf4j"  % AkkaVersion,
   "com.typesafe.akka" %% "akka-testkit" % AkkaVersion,
   "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
   "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion

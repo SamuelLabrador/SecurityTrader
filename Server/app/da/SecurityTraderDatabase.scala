@@ -77,6 +77,7 @@ class SecurityTraderDatabase @Inject() (db: Database) (implicit ec: ExecutionCon
         } else {
           None
         }
+
       }
     }
   }

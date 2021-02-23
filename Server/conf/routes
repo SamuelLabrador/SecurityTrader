@@ -6,10 +6,12 @@
 #  summary: Gets status of server
 #  description: Returns the time and ip address of the server
 #  responses:
-#    200:
+#    "200":
 #      description: success
-#      schema:
-#        $ref: '#/definitions/models.rest.ServerStatus'
+#      content:
+#        application/json:
+#          schema:
+#            $ref: '#/components/schemas/models.rest.ServerStatus'
 ###
 GET /api/status                         controllers.GameController.status
 

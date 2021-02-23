@@ -6,7 +6,7 @@ import { RoutesApi, Configuration, ModelsRestServerStatus } from '../fetch/api';
   providedIn: 'root'
 })
 export class ApiService {
-  api: RoutesApi
+  api: RoutesApi;
 
   constructor(applicationConfig: ConfigurationService) {
     const config = new Configuration({

@@ -1,0 +1,18 @@
+[
+    {
+        "msgType": "SendMessage",
+        "data": {
+            "message": "Hello World!"
+        }
+    },
+    {
+        "msgType": "CreateGame",
+        "data": {}
+    },
+    {
+      "msgType": "JoinGame",
+      "data": {
+        "id": "7"
+      }
+    }
+]
