@@ -26,9 +26,4 @@ class HomeController @Inject()( val db: SecurityTraderDatabase, val controllerCo
   def createGame() = Action { implicit request: Request[AnyContent] =>
     Ok("created.")
   }
-  //todo Remove this later
-  def updateDB() = Action { implicit request: Request[AnyContent] =>
-    db.updateSomething()
-    Ok("Database Updated")
-  }
 }
