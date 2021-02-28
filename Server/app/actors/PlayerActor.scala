@@ -17,29 +17,29 @@ import scala.concurrent.duration.DurationInt
 import scala.util.Try
 
 object PlayerActor {
-  sealed trait Message
+  sealed trait Command
 
-  private case object InternalStop extends Message
+  private case object InternalStop extends Command
 
   trait Factory {
-    def apply(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message]): Behavior[Message]
+    def apply(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message]): Behavior[Command]
   }
 
   def apply(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
-           (implicit mat: Materializer, ec: ExecutionContext): Behavior[Message] = {
+           (implicit mat: Materializer, ec: ExecutionContext): Behavior[Command] = {
     Behaviors.setup { implicit context =>
       implicit val scheduler: Scheduler = context.system.scheduler
       new PlayerActor(id, refereeParentActor).behavior
     }
   }
 
-  final case class Ping() extends Message
-  final case class Connect(replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Message
-  final case class BroadcastMessage(message: String) extends Message
-  final case class CreateGame() extends Message
-  final case class RefereeAssignment(refereeActor: ActorRef[RefereeActor.Message]) extends Message
-  final case class InboxMessage(message: String) extends Message
-  final case class ListingResponse(listing: Receptionist.Listing) extends Message
+  final case class Ping() extends Command
+  final case class Connect(replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Command
+  final case class BroadcastMessage(message: String) extends Command
+  final case class CreateGame() extends Command
+  final case class RefereeAssignment(refereeActor: ActorRef[RefereeActor.Command]) extends Command
+  final case class InboxMessage(message: String) extends Command
+  final case class ListingResponse(listing: Receptionist.Listing) extends Command
 }
 
 /**
@@ -51,7 +51,7 @@ object PlayerActor {
  * @param scheduler system scheduler. Gives guidance for how to handle incoming messages
  */
 class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
-                  (implicit context: ActorContext[PlayerActor.Message], implicit val scheduler: Scheduler) {
+                  (implicit context: ActorContext[PlayerActor.Command], implicit val scheduler: Scheduler) {
   import PlayerActor._
 
   implicit val timeout: Timeout             = Timeout(50.millis)
@@ -60,8 +60,8 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
   val listingResponseAdapter: ActorRef[Receptionist.Listing] =
     context.messageAdapter[Receptionist.Listing](ListingResponse)
 
-  var referee: Option[ActorRef[RefereeActor.Message]] = None
-  var refereeActorServiceKey: Option[ServiceKey[RefereeActor.Message]] = None
+  var referee: Option[ActorRef[RefereeActor.Command]] = None
+  var refereeActorServiceKey: Option[ServiceKey[RefereeActor.Command]] = None
 
   /**
    * Processes raw input from the websocket connection and directs the input accordingly
@@ -73,7 +73,7 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
    */
   private val jsonSink: Sink[JsValue, Future[Done]] = Sink.foreach { json =>
     // When the user types in a stock in the upper right corner, this is triggered,
-    log.debug(s"received json input $json")
+    log.trace(s"Received json input $json")
 
     // Get WS Message
     WSMessageParser.parse(json) match {
@@ -98,21 +98,20 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
    * Meat and potatoes. Central logic. Processes messages.
    * Sends messages to and from the player (webapp) and the referee
    */
-  def behavior: Behavior[Message] = {
-    Behaviors.receiveMessage[Message] {
+  def behavior: Behavior[Command] = {
+    Behaviors.receiveMessage[Command] {
       case Connect(replyTo) =>
         log.info("Establishing websocket connection")
         replyTo ! websocketFlow
         Behaviors.same
 
       case BroadcastMessage(message) =>
-        log.info(s"Sending message: $message")
 
         if (referee.isDefined) {
-          log.debug("Sending broadcast message to referee")
+          log.debug(s"Sending broadcast message '$message' to referee")
           referee.get ! RefereeActor.BroadcastMessage(message)
         } else
-          log.debug("No referee defined!")
+          log.error("No referee defined!")
 
         Behaviors.same
 
@@ -139,7 +138,6 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
         Behaviors.same
 
       case Ping() =>
-        log.info(s"Received ping, sending pong")
         val data = Json.toJson(WSPongMessage(true))
         val wsMessage = Json.toJson(WSMessage(WSMessageType.PongMessage, data))
         val source = Source(Seq(wsMessage))
@@ -206,7 +204,7 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
     log.debug(s"Joining game with message: $msg")
 
     // Construct service key
-    this.refereeActorServiceKey = Some(ServiceKey[RefereeActor.Message](msg.id))
+    this.refereeActorServiceKey = Some(ServiceKey[RefereeActor.Command](msg.id))
     context.system.receptionist ! Receptionist.Find(this.refereeActorServiceKey.get, listingResponseAdapter)
   }
 

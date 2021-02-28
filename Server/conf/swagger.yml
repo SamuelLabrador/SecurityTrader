@@ -2,8 +2,14 @@ openapi: "3.0.0"
 info:
   title: "Security Trader API"
   description: ""
+servers:
+  -url: http://localhost:9000
 components:
   schemas:
+    Player:
+      $ref: '#/components/schemas/models.rest.Player'
+      type: 'object'
+
     WSMessage:
       properties:
         msgType:

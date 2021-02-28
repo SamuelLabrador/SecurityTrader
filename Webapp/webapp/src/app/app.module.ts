@@ -17,6 +17,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from "./services/auth.service";
 
 @NgModule({
   declarations: [
@@ -27,21 +28,22 @@ import { MatIconModule } from '@angular/material/icon';
     HelpComponent,
     ChatComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule
+  ],
   providers: [
     ApiService,
     ConfigurationService,
-    WebSocketService
+    WebSocketService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

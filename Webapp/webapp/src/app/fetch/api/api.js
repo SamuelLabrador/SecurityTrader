@@ -97,6 +97,36 @@ var WSMessageType;
 exports.RoutesApiFetchParamCreator = function (configuration) {
     return {
         /**
+         * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+         * @summary Creates user account
+         * @param {ModelsRestCreateRequest} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser: function (body, options) {
+            if (options === void 0) { options = {}; }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body', 'Required parameter body was null or undefined when calling createUser.');
+            }
+            var localVarPath = "/auth/create";
+            var localVarUrlObj = url.parse(localVarPath, true);
+            var localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            var localVarHeaderParameter = {};
+            var localVarQueryParameter = {};
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            var needsSerialization = ("ModelsRestCreateRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body = needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the time and ip address of the server
          * @summary Gets status of server
          * @param {*} [options] Override http request option.
@@ -118,6 +148,36 @@ exports.RoutesApiFetchParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * When providing a valid email and password the user will be able to log in to their account.
+         * @summary Allows User to Log In
+         * @param {ModelsRestLoginRequest} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userLogin: function (body, options) {
+            if (options === void 0) { options = {}; }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body', 'Required parameter body was null or undefined when calling userLogin.');
+            }
+            var localVarPath = "/auth/login";
+            var localVarUrlObj = url.parse(localVarPath, true);
+            var localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            var localVarHeaderParameter = {};
+            var localVarQueryParameter = {};
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            var needsSerialization = ("ModelsRestLoginRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body = needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 /**
@@ -127,6 +187,28 @@ exports.RoutesApiFetchParamCreator = function (configuration) {
 exports.RoutesApiFp = function (configuration) {
     return {
         /**
+         * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+         * @summary Creates user account
+         * @param {ModelsRestCreateRequest} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser: function (body, options) {
+            var localVarFetchArgs = exports.RoutesApiFetchParamCreator(configuration).createUser(body, options);
+            return function (fetch, basePath) {
+                if (fetch === void 0) { fetch = portableFetch; }
+                if (basePath === void 0) { basePath = BASE_PATH; }
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then(function (response) {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    }
+                    else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Returns the time and ip address of the server
          * @summary Gets status of server
          * @param {*} [options] Override http request option.
@@ -134,6 +216,28 @@ exports.RoutesApiFp = function (configuration) {
          */
         status: function (options) {
             var localVarFetchArgs = exports.RoutesApiFetchParamCreator(configuration).status(options);
+            return function (fetch, basePath) {
+                if (fetch === void 0) { fetch = portableFetch; }
+                if (basePath === void 0) { basePath = BASE_PATH; }
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then(function (response) {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    }
+                    else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * When providing a valid email and password the user will be able to log in to their account.
+         * @summary Allows User to Log In
+         * @param {ModelsRestLoginRequest} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userLogin: function (body, options) {
+            var localVarFetchArgs = exports.RoutesApiFetchParamCreator(configuration).userLogin(body, options);
             return function (fetch, basePath) {
                 if (fetch === void 0) { fetch = portableFetch; }
                 if (basePath === void 0) { basePath = BASE_PATH; }
@@ -156,6 +260,16 @@ exports.RoutesApiFp = function (configuration) {
 exports.RoutesApiFactory = function (configuration, fetch, basePath) {
     return {
         /**
+         * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+         * @summary Creates user account
+         * @param {ModelsRestCreateRequest} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUser: function (body, options) {
+            return exports.RoutesApiFp(configuration).createUser(body, options)(fetch, basePath);
+        },
+        /**
          * Returns the time and ip address of the server
          * @summary Gets status of server
          * @param {*} [options] Override http request option.
@@ -163,6 +277,16 @@ exports.RoutesApiFactory = function (configuration, fetch, basePath) {
          */
         status: function (options) {
             return exports.RoutesApiFp(configuration).status(options)(fetch, basePath);
+        },
+        /**
+         * When providing a valid email and password the user will be able to log in to their account.
+         * @summary Allows User to Log In
+         * @param {ModelsRestLoginRequest} body
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userLogin: function (body, options) {
+            return exports.RoutesApiFp(configuration).userLogin(body, options)(fetch, basePath);
         },
     };
 };
@@ -178,6 +302,17 @@ var RoutesApi = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
+     * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+     * @summary Creates user account
+     * @param {ModelsRestCreateRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoutesApi
+     */
+    RoutesApi.prototype.createUser = function (body, options) {
+        return exports.RoutesApiFp(this.configuration).createUser(body, options)(this.fetch, this.basePath);
+    };
+    /**
      * Returns the time and ip address of the server
      * @summary Gets status of server
      * @param {*} [options] Override http request option.
@@ -186,6 +321,17 @@ var RoutesApi = /** @class */ (function (_super) {
      */
     RoutesApi.prototype.status = function (options) {
         return exports.RoutesApiFp(this.configuration).status(options)(this.fetch, this.basePath);
+    };
+    /**
+     * When providing a valid email and password the user will be able to log in to their account.
+     * @summary Allows User to Log In
+     * @param {ModelsRestLoginRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoutesApi
+     */
+    RoutesApi.prototype.userLogin = function (body, options) {
+        return exports.RoutesApiFp(this.configuration).userLogin(body, options)(this.fetch, this.basePath);
     };
     return RoutesApi;
 }(BaseAPI));

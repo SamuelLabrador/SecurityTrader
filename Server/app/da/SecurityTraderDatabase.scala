@@ -6,6 +6,8 @@ import play.api.db.Database
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.concurrent.CustomExecutionContext
 import akka.actor.ActorSystem
+import models.rest.Player
+import play.api.Logger
 import sun.security.util.Password
 
 import scala.util.{Failure, Success}
@@ -20,6 +22,8 @@ class DatabaseExecutionContext @Inject()(system: ActorSystem)
 @Singleton
 class SecurityTraderDatabase @Inject() (db: Database) (implicit ec: ExecutionContext) {
 
+  val log = Logger(this.getClass)
+
   def userExists(email: String): Future[Boolean] = {
      Future {
       db.withConnection { conn =>
@@ -28,8 +32,8 @@ class SecurityTraderDatabase @Inject() (db: Database) (implicit ec: ExecutionCon
         val prepStatement = conn.prepareStatement(statement)
         prepStatement.setString(1, email)
         val results = prepStatement.executeQuery()
-        results.next();
-        val count = results.getInt(1);
+        results.next()
+        val count = results.getInt(1)
         count != 0
       }
     }
@@ -78,6 +82,32 @@ class SecurityTraderDatabase @Inject() (db: Database) (implicit ec: ExecutionCon
           None
         }
 
+      }
+    }
+  }
+
+  def getUser(email: String) : Future[Option[Player]] = {
+    Future {
+      db.withConnection { conn =>
+        try {
+          val statement = "SELECT * FROM User WHERE email LIKE ?"
+          val prepStatement = conn.prepareStatement(statement)
+
+          prepStatement.setString(1, email)
+
+          val result = prepStatement.executeQuery()
+          result.next()
+
+          val id = result.getString("id")
+          val username = result.getString("username")
+          val isMod = result.getBoolean("isMod")
+
+          Some(Player(id, Some(email), username, isMod))
+        } catch {
+          case e: Throwable =>
+            log.error(s"An exception ocurred while trying to get the user: ${e}")
+            None
+        }
       }
     }
   }

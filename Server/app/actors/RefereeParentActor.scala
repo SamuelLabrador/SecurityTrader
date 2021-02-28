@@ -1,5 +1,6 @@
 package actors
 
+import akka.actor.typed.receptionist.Receptionist
 import akka.actor.typed.{ActorRef, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
 import akka.util.Timeout
@@ -16,7 +17,7 @@ import scala.concurrent.duration.DurationInt
 object RefereeParentActor extends ActorModule {
   type Message = Create
 
-  final case class Create(id: String, replyTo: ActorRef[PlayerActor.Message])
+  final case class Create(id: String, replyTo: ActorRef[PlayerActor.Command])
 
   @Provides def apply(childFactory: RefereeActor.Factory, configuration: Configuration)
                      (implicit ec: ExecutionContext): Behavior[Create] = {
