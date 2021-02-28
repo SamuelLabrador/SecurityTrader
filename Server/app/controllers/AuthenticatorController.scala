@@ -27,7 +27,7 @@ class AuthenticatorController @Inject() (val dbI: DatabaseInterface,
 
     // Call database function to add new user in table and get token
     val maybeToken = for {
-      creationResult <- dbI.createUser(credentials.email, credentials.userName, credentials.password)
+      creationResult <- dbI.createUser(credentials.email, credentials.username, credentials.password)
       token <- if (creationResult) {
         this.generateToken(credentials.email)
       } else {

@@ -17,6 +17,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import {AuthService} from "./services/auth.service";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatIconModule } from '@angular/material/icon';
   providers: [
     ApiService,
     ConfigurationService,
-    WebSocketService
+    WebSocketService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

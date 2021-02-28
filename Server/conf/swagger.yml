@@ -6,6 +6,10 @@ servers:
   -url: http://localhost:9000
 components:
   schemas:
+    Player:
+      $ref: '#/components/schemas/models.rest.Player'
+      type: 'object'
+
     WSMessage:
       properties:
         msgType:
