@@ -2,6 +2,8 @@ openapi: "3.0.0"
 info:
   title: "Security Trader API"
   description: ""
+servers:
+  -url: http://localhost:9000
 components:
   schemas:
     WSMessage:

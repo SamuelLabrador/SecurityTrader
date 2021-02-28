@@ -25,7 +25,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
   "com.typesafe.akka" %% "akka-testkit" % AkkaVersion,
   "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
-  "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion
+  "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion,
+  "com.pauldijou" %% "jwt-play-json" % "5.0.0"
 )
 swaggerDomainNameSpaces := Seq("models")
 

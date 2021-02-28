@@ -2,6 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Map static resources from the /public folder to the /assets URL path
+### NoDocs ###
+# URL For swagger doc: http://localhost:9000/assets/swagger.json
+GET /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)
+
+### NoDocs ###
+GET /ws                             controllers.GameController.socket
+
 ###
 #  summary: Gets status of server
 #  description: Returns the time and ip address of the server
@@ -15,44 +23,41 @@
 ###
 GET /api/status                         controllers.GameController.status
 
-# Map static resources from the /public folder to the /assets URL path
-### NoDocs ###
-GET /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)
-
-### NoDocs ###
-# http://localhost:9000/docs/swagger-ui/index.html?url=/assets/swagger.json#/
-GET /docs/swagger-ui/*file          controllers.Assets.at(path:String="/public/lib/swagger-ui", file:String)
-
-### NoDocs ###
-GET /ws                             controllers.GameController.socket
 
 ###
 #  summary: Creates user account
 #  description: User can create an Account by sending their username, password, email. If email is taken user account will not be created.
-#  parameters:
-#    - name: body
-#      schema:
-#        $ref: '#/definitions/models.rest.CreateRequest'
+#  requestBody:
+#      required: true
+#      content:
+#        application/json:
+#          schema:
+#            $ref: '#/components/schemas/models.rest.CreateRequest'
 #  responses:
 #    200:
 #      description: success
-#      schema:
-#        $ref: '#/definitions/models.rest.AuthResponse'
+#      content:
+#        application/json:
+#          schema:
+#            $ref: '#/components/schemas/models.rest.AuthResponse'
 ###
-POST /auth/create                   controllers.AuthenticatorController.createUser
-
+POST /auth/create                   controllers.AuthenticatorController.createUser()
 
 ###
 #  summary: Allows User to Log In
 #  description: When providing a valid email and password the user will be able to log in to their account.
-#  parameters:
-#    - name: body
-#      schema:
-#        $ref: '#/definitions/models.rest.LoginRequest'
+#  requestBody:
+#      required: true
+#      content:
+#        application/json:
+#          schema:
+#            $ref: '#/components/schemas/models.rest.LoginRequest'
 #  responses:
 #    200:
 #      description: success
-#      schema:
-#        $ref: '#/definitions/models.rest.AuthResponse'
+#      content:
+#        application/json:
+#          schema:
+#            $ref: '#/components/schemas/models.rest.AuthResponse'
 ###
-POST /auth/login                    controllers.AuthenticatorController.userLogin
+POST /auth/login                    controllers.AuthenticatorController.userLogin()

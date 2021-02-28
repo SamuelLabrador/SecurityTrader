@@ -8,3 +8,4 @@ project/target/*
 /.settings
 /RUNNING_PID
 *.iml
+*.sc

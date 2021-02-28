@@ -2,9 +2,7 @@ package models.rest
 
 import play.api.libs.json.{Json, OFormat, Reads, Writes}
 
-case class AuthResponse(success: Boolean){
-
-}
+case class AuthResponse(token: String) {}
 
 object AuthResponse {
   implicit val createResponseFormat = Json.format[ServerStatus]
