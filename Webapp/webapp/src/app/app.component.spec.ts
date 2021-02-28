@@ -13,7 +13,6 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     // Initialize our mock object
     mockApiService = jasmine.createSpyObj(ApiService, ['getStatus']);
-
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
@@ -44,6 +43,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
 
-    expect(mockApiService.getStatus).toHaveBeenCalledTimes(1);
+    expect(mockApiService.getStatus).toHaveBeenCalledTimes(0);
   });
 });
