@@ -18,8 +18,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { SignupComponent } from './pages/signup/signup.component';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { AuthService } from './services/auth.service';
+import { PlayerListComponent } from './components/player-list/player-list.component';
+import { GameSettingsComponent } from './components/game-settings/game-settings.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { AuthService } from './services/auth.service';
     HelpComponent,
     ChatComponent,
     SignupComponent,
+    PlayerListComponent,
+    GameSettingsComponent,
   ],
     imports: [
         BrowserModule,

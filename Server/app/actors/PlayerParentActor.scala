@@ -20,7 +20,9 @@ object PlayerParentActor extends ActorModule {
   type Message = Create
 
   sealed trait Command
-  final case class Create(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message],
+  final case class Create(id: String,
+                          username: String,
+                          refereeParentActor: ActorRef[RefereeParentActor.Message],
                           replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Command
 
   @Provides def apply(childFactory: PlayerActor.Factory, configuration: Configuration)
@@ -31,9 +33,9 @@ object PlayerParentActor extends ActorModule {
     Behaviors.setup { context =>
       Behaviors.logMessages {
         Behaviors.receiveMessage {
-          case Create(id, refereeParentActor, replyTo) =>
+          case Create(id, username, refereeParentActor, replyTo) =>
             val name = s"playerActor-$id"
-            val child = context.spawn(childFactory(id, refereeParentActor), name)
+            val child = context.spawn(childFactory(id, username, refereeParentActor), name)
             child ! PlayerActor.Connect(replyTo)
             Behaviors.same
         }

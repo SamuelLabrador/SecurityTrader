@@ -1,9 +1,23 @@
 <div class="chat-container">
-  <h3>Chat</h3>
-  <div class="chat-window">
-    <ul>
-      <li *ngFor="let item of messageList">{{item}}</li>
-    </ul>
+  <div class="mat-h3">Chat</div>
+  <div class="chat-window" #chatWindow>
+    <table class="message-list">
+      <tr *ngFor="let item of messageList" #messageList>
+        <td>
+          [{{this.getTimeFormat(item.timestamp)}}]
+        </td>
+        <td>
+          <span class="message-user">{{item.username}}</span>
+          {{item.message}}
+        </td>
+      </tr>
+    </table>
   </div>
-  <input class="chat-input" [(ngModel)]="currentMessage" (keyup)="handleInput($event)">
+  <div class="chat-input-container">
+    <mat-form-field class="chat-input">
+      <mat-label>Message</mat-label>
+      <input matInput [(ngModel)]="currentMessage" (keyup)="handleInput($event)">
+      <mat-icon matSuffix class="send-icon" (click)="sendMessage(this.currentMessage)">send</mat-icon>
+    </mat-form-field>
+  </div>
 </div>

@@ -30,7 +30,7 @@ case class WSPing() extends WSData
 case class WSJoinGame(id: String) extends WSData
 object WSJoinGame { implicit val fmt: OFormat[WSJoinGame] = Json.format[WSJoinGame] }
 
-case class WSInboxMessage(message: String) extends WSData
+case class WSInboxMessage(username: String, message: String, timestamp: Long) extends WSData
 object WSInboxMessage { implicit val fmt: OFormat[WSInboxMessage] = Json.format[WSInboxMessage] }
 
 case class WSPongMessage(success: Boolean) extends WSData

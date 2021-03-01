@@ -1,7 +1,7 @@
 package actors
 
 
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior, PostStop, Signal}
@@ -10,6 +10,7 @@ import akka.util.Timeout
 import models.rest.GameState
 import org.slf4j.Logger
 
+import java.time.ZonedDateTime
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.DurationInt
 
@@ -33,7 +34,7 @@ object RefereeActor {
   * Receive Messages
   * */
   final case class JoinRequest(replyTo: ActorRef[PlayerActor.Command]) extends Command
-  final case class BroadcastMessage(message: String) extends Command
+  final case class BroadcastMessage(username: String, message: String) extends Command
   final case class GameStateUpdate(gameState: GameState)
   final case class AssignActor(ref: ActorRef[GameEngineActor.Command]) extends Command
   final case class CreateGame() extends Command
@@ -97,10 +98,10 @@ class RefereeActor(id: String)(implicit context: ActorContext[RefereeActor.Comma
         replyTo ! PlayerActor.RefereeAssignment(context.self)
         this
 
-      case BroadcastMessage(message) =>
+      case BroadcastMessage(username, message) =>
         playerList.foreach( p => {
-          log.trace(s"Sending message $message to $p")
-          p ! PlayerActor.InboxMessage(message)
+          log.trace(s"Sending message $message from $username to $p")
+          p ! PlayerActor.InboxMessage(username, message, ZonedDateTime.now().toInstant.toEpochMilli)
         })
         this
 
