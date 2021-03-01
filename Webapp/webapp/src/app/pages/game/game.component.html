@@ -2,7 +2,7 @@
   <mat-grid-list cols="4" rows="5" rowHeight="160px">
 
     <mat-grid-tile class="black-border" [colspan]="1" [rowspan]="1">
-      Player List
+      <app-player-list></app-player-list>
     </mat-grid-tile>
     <mat-grid-tile  class="black-border" [colspan]="3" [rowspan]="5">
       <span class="game">
@@ -11,7 +11,7 @@
     </mat-grid-tile>
 
     <mat-grid-tile class="black-border" [colspan]="1" [rowspan]="2">
-      Game Settings
+      <app-game-settings></app-game-settings>
     </mat-grid-tile>
     <mat-grid-tile  class="black-border" [colspan]="1" [rowspan]="2">
       <div class="chat-window">

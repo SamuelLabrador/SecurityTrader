@@ -1,8 +1,9 @@
 <!-- Navigation Bar -->
 <nav class="toolbar">
-  <!-- TODO: Implement Sign In and connect href-->
-  <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
-  <!-- TODO: Implement Help Page and connect href  -->
+  <a mat-button routerLink="/" routerLinkActive="active"><mat-icon>home</mat-icon></a>
+  <!-- Check if user is logged in; if not, display login link -->
+  <a *ngIf="!isLoggedIn" mat-button routerLink="/login" routerLinkActive="active">Login</a>
+  <a *ngIf="isLoggedIn" mat-button (click)="logout">Logout</a>
   <a mat-button routerLink="/help" routerLinkActive="active">Help</a>
 </nav>
 

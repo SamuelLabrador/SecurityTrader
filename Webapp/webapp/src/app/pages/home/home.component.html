@@ -1,6 +1,10 @@
 <div class="content">
   <div class="mat-display-4 title t-title">Security Trader</div>
   <ul class="option-column">
+    <mat-form-field class="t-username-form-field">
+      <mat-label>Set Username</mat-label>
+      <input matInput placeholder="Username" type="text" [formControl]="username">
+    </mat-form-field>
     <li>
       <button mat-raised-button class='t-create-game-button'
               color="primary" (click)="createGame();">Create Game</button>

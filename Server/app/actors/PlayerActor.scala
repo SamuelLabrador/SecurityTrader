@@ -22,14 +22,18 @@ object PlayerActor {
   private case object InternalStop extends Command
 
   trait Factory {
-    def apply(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message]): Behavior[Command]
+    def apply(id: String,
+              username: String,
+              refereeParentActor: ActorRef[RefereeParentActor.Message]): Behavior[Command]
   }
 
-  def apply(id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
+  def apply(id: String,
+            username: String,
+            refereeParentActor: ActorRef[RefereeParentActor.Message])
            (implicit mat: Materializer, ec: ExecutionContext): Behavior[Command] = {
     Behaviors.setup { implicit context =>
       implicit val scheduler: Scheduler = context.system.scheduler
-      new PlayerActor(id, refereeParentActor).behavior
+      new PlayerActor(id, username, refereeParentActor).behavior
     }
   }
 
@@ -38,7 +42,7 @@ object PlayerActor {
   final case class BroadcastMessage(message: String) extends Command
   final case class CreateGame() extends Command
   final case class RefereeAssignment(refereeActor: ActorRef[RefereeActor.Command]) extends Command
-  final case class InboxMessage(message: String) extends Command
+  final case class InboxMessage(username: String, message: String, timestamp: Long) extends Command
   final case class ListingResponse(listing: Receptionist.Listing) extends Command
 }
 
@@ -50,7 +54,9 @@ object PlayerActor {
  * @param context context of actor. for internal usage
  * @param scheduler system scheduler. Gives guidance for how to handle incoming messages
  */
-class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.Message])
+class PlayerActor (id: String,
+                   username: String,
+                   refereeParentActor: ActorRef[RefereeParentActor.Message])
                   (implicit context: ActorContext[PlayerActor.Command], implicit val scheduler: Scheduler) {
   import PlayerActor._
 
@@ -109,16 +115,16 @@ class PlayerActor (id: String, refereeParentActor: ActorRef[RefereeParentActor.M
 
         if (referee.isDefined) {
           log.debug(s"Sending broadcast message '$message' to referee")
-          referee.get ! RefereeActor.BroadcastMessage(message)
+          referee.get ! RefereeActor.BroadcastMessage(username, message)
         } else
           log.error("No referee defined!")
 
         Behaviors.same
 
-      case InboxMessage(message) =>
+      case InboxMessage(username, message, timestamp) =>
         // Messages sent to the webapp need to be converted to JSON format
         // and encapsulated in Source
-        val data = Json.toJson(WSInboxMessage(message))
+        val data = Json.toJson(WSInboxMessage(username, message, timestamp))
         val wsMessage = Json.toJson(WSMessage(WSMessageType.InboxMessage, data))
         val source = Source(Seq(wsMessage))
 
