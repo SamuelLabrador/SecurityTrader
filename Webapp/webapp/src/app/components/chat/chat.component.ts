@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   @ViewChildren('messageList') messageListElement: QueryList<ModelsRestWSInboxMessage> | undefined = undefined;
 
   private scrollContainer: any;
-  private messageList: ModelsRestWSInboxMessage[] = [];
+  messageList: ModelsRestWSInboxMessage[] = [];
 
 
   currentMessage = '';
