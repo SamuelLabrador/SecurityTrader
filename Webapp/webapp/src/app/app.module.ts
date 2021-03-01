@@ -7,8 +7,8 @@ import { ApiService } from './services/api.service';
 import { ConfigurationService } from './services/configuration.service';
 import { WebSocketService } from './services/websocket.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from "@angular/material/button";
-import { MatGridListModule } from "@angular/material/grid-list";
+import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { GameComponent } from './pages/game/game.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { SignupComponent } from './pages/signup/signup.component';
 import {MatCardModule} from '@angular/material/card';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {MatCardModule} from '@angular/material/card';
   providers: [
     ApiService,
     ConfigurationService,
-    WebSocketService
+    WebSocketService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

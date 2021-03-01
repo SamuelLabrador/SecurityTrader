@@ -4,4 +4,5 @@ case class GameState(turn: Int,
                      phase: Int,
                      board: Board,
                      players: Seq[Player],
-                     ledgers: Seq[Ledger])
+                     ledgers: Seq[Ledger],
+                     timestamp: Long)

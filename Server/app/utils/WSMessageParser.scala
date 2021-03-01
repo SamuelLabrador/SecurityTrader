@@ -1,6 +1,6 @@
 package utils
 
-import models.rest.{InternalWSMessage, WSBroadcastMessage, WSCreateGame, WSJoinGame, WSMessage, WSMessageType, WSPing}
+import models.rest.{WSData, WSBroadcastMessage, WSCreateGame, WSJoinGame, WSMessage, WSMessageType, WSPing}
 import play.api.Logger
 import play.api.libs.json.JsValue
 
@@ -18,7 +18,7 @@ object WSMessageParser {
    * @param json The JsValue to be parsed
    * @return An option that may contain the new class from the parsed JSON
    */
-  def parse(json: JsValue): Option[InternalWSMessage] = {
+  def parse(json: JsValue): Option[WSData] = {
 
     json.asOpt[WSMessage] match {
 

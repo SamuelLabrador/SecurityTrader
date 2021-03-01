@@ -7,8 +7,12 @@ import play.api.libs.concurrent.AkkaGuiceSupport
 
 import scala.concurrent.ExecutionContext
 
+/**
+ * This class handles handles the dependency injections
+ */
 class Module extends AbstractModule with AkkaGuiceSupport {
   override def configure(): Unit = {
+    bindTypedActor(GameEngineActor(), "gameEngineActor")
     bindTypedActor(PlayerParentActor, "userParentActor")
     bindTypedActor(RefereeParentActor, "refereeParentActor")
     bind(classOf[PlayerActor.Factory]).toProvider(classOf[PlayerActorFactoryProvider])

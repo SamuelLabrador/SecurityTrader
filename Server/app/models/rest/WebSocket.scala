@@ -18,21 +18,20 @@ object WSMessageType {
 case class WSMessage(msgType: String, data: JsValue)
 object WSMessage { implicit val fmt: OFormat[WSMessage] = Json.format[WSMessage] }
 
-// This class is only for internal use. Should not be exposed to public.
-abstract class InternalWSMessage()
+abstract class WSData()
 
-case class WSBroadcastMessage(message: String) extends InternalWSMessage
+case class WSBroadcastMessage(message: String) extends WSData
 object WSBroadcastMessage { implicit val fmt: OFormat[WSBroadcastMessage] = Json.format[WSBroadcastMessage] }
 
-case class WSCreateGame() extends InternalWSMessage
+case class WSCreateGame() extends WSData
 
-case class WSPing() extends InternalWSMessage
+case class WSPing() extends WSData
 
-case class WSJoinGame(id: String) extends InternalWSMessage
+case class WSJoinGame(id: String) extends WSData
 object WSJoinGame { implicit val fmt: OFormat[WSJoinGame] = Json.format[WSJoinGame] }
 
-case class WSInboxMessage(message: String) extends InternalWSMessage
+case class WSInboxMessage(message: String) extends WSData
 object WSInboxMessage { implicit val fmt: OFormat[WSInboxMessage] = Json.format[WSInboxMessage] }
 
-case class WSPongMessage(success: Boolean) extends InternalWSMessage
+case class WSPongMessage(success: Boolean) extends WSData
 object WSPongMessage { implicit val fmt: OFormat[WSPongMessage] = Json.format[WSPongMessage] }

@@ -63,6 +63,94 @@ export declare class RequiredError extends Error {
 /**
  *
  * @export
+ * @interface ModelsRestAuthResponse
+ */
+export interface ModelsRestAuthResponse {
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestAuthResponse
+     */
+    token: string;
+}
+/**
+ *
+ * @export
+ * @interface ModelsRestCreateRequest
+ */
+export interface ModelsRestCreateRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestCreateRequest
+     */
+    email: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestCreateRequest
+     */
+    username: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestCreateRequest
+     */
+    password: string;
+}
+/**
+ *
+ * @export
+ * @interface ModelsRestLoginRequest
+ */
+export interface ModelsRestLoginRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestLoginRequest
+     */
+    email: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestLoginRequest
+     */
+    password: string;
+}
+/**
+ *
+ * @export
+ * @interface ModelsRestPlayer
+ */
+export interface ModelsRestPlayer {
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestPlayer
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestPlayer
+     */
+    email?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestPlayer
+     */
+    username: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof ModelsRestPlayer
+     */
+    isMod: boolean;
+}
+/**
+ *
+ * @export
  * @interface ModelsRestServerStatus
  */
 export interface ModelsRestServerStatus {
@@ -148,6 +236,13 @@ export interface ModelsRestWSPongMessage {
 /**
  *
  * @export
+ * @interface Player
+ */
+export interface Player {
+}
+/**
+ *
+ * @export
  * @interface WSBroadcastMessage
  */
 export interface WSBroadcastMessage {
@@ -225,12 +320,28 @@ export interface WSPongMessage {
  */
 export declare const RoutesApiFetchParamCreator: (configuration?: Configuration) => {
     /**
+     * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+     * @summary Creates user account
+     * @param {ModelsRestCreateRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createUser(body: ModelsRestCreateRequest, options?: any): FetchArgs;
+    /**
      * Returns the time and ip address of the server
      * @summary Gets status of server
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     status(options?: any): FetchArgs;
+    /**
+     * When providing a valid email and password the user will be able to log in to their account.
+     * @summary Allows User to Log In
+     * @param {ModelsRestLoginRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userLogin(body: ModelsRestLoginRequest, options?: any): FetchArgs;
 };
 /**
  * RoutesApi - functional programming interface
@@ -238,12 +349,28 @@ export declare const RoutesApiFetchParamCreator: (configuration?: Configuration)
  */
 export declare const RoutesApiFp: (configuration?: Configuration) => {
     /**
+     * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+     * @summary Creates user account
+     * @param {ModelsRestCreateRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createUser(body: ModelsRestCreateRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelsRestAuthResponse>;
+    /**
      * Returns the time and ip address of the server
      * @summary Gets status of server
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     status(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelsRestServerStatus>;
+    /**
+     * When providing a valid email and password the user will be able to log in to their account.
+     * @summary Allows User to Log In
+     * @param {ModelsRestLoginRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userLogin(body: ModelsRestLoginRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelsRestAuthResponse>;
 };
 /**
  * RoutesApi - factory interface
@@ -251,12 +378,28 @@ export declare const RoutesApiFp: (configuration?: Configuration) => {
  */
 export declare const RoutesApiFactory: (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) => {
     /**
+     * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+     * @summary Creates user account
+     * @param {ModelsRestCreateRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createUser(body: ModelsRestCreateRequest, options?: any): Promise<ModelsRestAuthResponse>;
+    /**
      * Returns the time and ip address of the server
      * @summary Gets status of server
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     status(options?: any): Promise<ModelsRestServerStatus>;
+    /**
+     * When providing a valid email and password the user will be able to log in to their account.
+     * @summary Allows User to Log In
+     * @param {ModelsRestLoginRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    userLogin(body: ModelsRestLoginRequest, options?: any): Promise<ModelsRestAuthResponse>;
 };
 /**
  * RoutesApi - object-oriented interface
@@ -266,6 +409,15 @@ export declare const RoutesApiFactory: (configuration?: Configuration, fetch?: F
  */
 export declare class RoutesApi extends BaseAPI {
     /**
+     * User can create an Account by sending their username, password, email. If email is taken user account will not be created.
+     * @summary Creates user account
+     * @param {ModelsRestCreateRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoutesApi
+     */
+    createUser(body: ModelsRestCreateRequest, options?: any): Promise<ModelsRestAuthResponse>;
+    /**
      * Returns the time and ip address of the server
      * @summary Gets status of server
      * @param {*} [options] Override http request option.
@@ -273,4 +425,13 @@ export declare class RoutesApi extends BaseAPI {
      * @memberof RoutesApi
      */
     status(options?: any): Promise<ModelsRestServerStatus>;
+    /**
+     * When providing a valid email and password the user will be able to log in to their account.
+     * @summary Allows User to Log In
+     * @param {ModelsRestLoginRequest} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoutesApi
+     */
+    userLogin(body: ModelsRestLoginRequest, options?: any): Promise<ModelsRestAuthResponse>;
 }

@@ -20,8 +20,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 
 @Singleton
-class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Create],
-                                refereeParentActor: ActorRef[RefereeParentActor.Create],
+class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Message],
+                                refereeParentActor: ActorRef[RefereeParentActor.Message],
                                 cc: ControllerComponents)
                                (implicit ec: ExecutionContext, scheduler: Scheduler)
   extends AbstractController(cc) {

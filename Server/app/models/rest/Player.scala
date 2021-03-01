@@ -1,4 +1,10 @@
 package models.rest
 
-case class Player(id: Int,
-                  userName: String)
+import play.api.libs.json.Json
+
+case class Player(id: String,
+                  email: Option[String],
+                  username: String,
+                  isMod: Boolean)
+
+object Player { implicit val fmt = Json.format[Player]}

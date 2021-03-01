@@ -1,12 +1,17 @@
 package da
 
+import models.rest.Player
 import org.mindrot.jbcrypt.BCrypt
+import play.api.Configuration
 import sun.security.util.Password
+import utils.TokenUtility
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class DatabaseInterface @Inject() (val db: SecurityTraderDatabase) (implicit ec: ExecutionContext){
+class DatabaseInterface @Inject()(val db: SecurityTraderDatabase)
+                                 (implicit ec: ExecutionContext){
+
   def createUser(email: String, userName: String, password: String): Future[Boolean] = {
     // check to see if email is available
     for {
@@ -26,14 +31,22 @@ class DatabaseInterface @Inject() (val db: SecurityTraderDatabase) (implicit ec:
     }
   }
 
-  def checkPswd(email: String,password: String): Future[Boolean] = {
+  def checkPswd(email: String, password: String): Future[Boolean] = {
     for {
       maybeHashedPswd <- db.getHashedPswd(email)   //user login will pass hashed pswd from DB
     } yield {
-        maybeHashedPswd match {
-          case Some(hashedPswd) => BCrypt.checkpw(password, hashedPswd)
-          case _ => false
-        }
+      maybeHashedPswd match {
+        case Some(hashedPswd) => BCrypt.checkpw(password, hashedPswd)
+        case _ => false
       }
+    }
+  }
+
+  def getPlayer(email: String): Future[Option[Player]] = {
+    for {
+      player <- db.getUser(email)
+    } yield {
+      player
+    }
   }
 }

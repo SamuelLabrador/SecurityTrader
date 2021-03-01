@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ConfigurationService } from './configuration.service';
-import { RoutesApi, Configuration, ModelsRestServerStatus } from '../fetch/api';
+import {
+  RoutesApi,
+  Configuration,
+  ModelsRestServerStatus,
+  ModelsRestAuthResponse,
+  ModelsRestLoginRequest, ModelsRestCreateRequest
+} from '../fetch/api';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +24,24 @@ export class ApiService {
 
   public getStatus(): Promise<ModelsRestServerStatus> {
     return this.api.status();
+  }
+
+  public login(email: string, password: string): Promise<ModelsRestAuthResponse> {
+    const body = {
+      email,
+      password
+    } as ModelsRestLoginRequest;
+
+    return this.api.userLogin(body);
+  }
+
+  public createUser(email: string, username: string, password: string): Promise<ModelsRestAuthResponse> {
+    const body = {
+      email,
+      username,
+      password
+    } as ModelsRestCreateRequest;
+
+    return this.api.createUser(body);
   }
 }
