@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from 'jwt-decode';
 import {ModelsRestPlayer} from "../fetch/api";
+import { ApiService } from "./api.service";
 
 export interface SecurityTraderToken {
   exp: number;
@@ -19,7 +20,12 @@ export class AuthService {
   private token: string = '';
   private tokenData: SecurityTraderToken | undefined = undefined;
 
-  constructor() { }
+  constructor(private apiService: ApiService) {
+    const maybeToken = localStorage.getItem("token");
+    if (maybeToken) {
+      this.setToken(maybeToken);
+    }
+  }
 
   /**
    * Gets the token string
@@ -56,10 +62,28 @@ export class AuthService {
    */
   setToken(token: string) {
     try {
+      // Check if token is valid first.
       const tokenInfo = jwt_decode(token) as SecurityTraderToken;
       this.tokenData = tokenInfo;
+
+      // Save token to localStorage. We want to use token in WebSocket messages
+      localStorage.setItem('token', token);
     } catch (e) {
       console.log(e);
     }
+  }
+
+  logout(): boolean {
+    console.log('logging out');
+    localStorage.clear();
+    return true;
+  }
+
+  isLoggedIn(): Boolean {
+    return this.tokenData !== undefined;
+  }
+
+  getUsername(): string | undefined {
+    return this.isLoggedIn() ? this.tokenData?.username : undefined;
   }
 }

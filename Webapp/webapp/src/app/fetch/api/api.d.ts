@@ -198,7 +198,19 @@ export interface ModelsRestWSInboxMessage {
      * @type {string}
      * @memberof ModelsRestWSInboxMessage
      */
+    username: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ModelsRestWSInboxMessage
+     */
     message: string;
+    /**
+     *
+     * @type {number}
+     * @memberof ModelsRestWSInboxMessage
+     */
+    timestamp: number;
 }
 /**
  *

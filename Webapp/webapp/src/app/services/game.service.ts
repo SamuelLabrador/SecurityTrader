@@ -1,39 +1,49 @@
 import { Injectable } from '@angular/core';
 import { WebSocketService } from './websocket.service';
 import { ModelsRestWSCreateGame, ModelsRestWSJoinGame, WSMessage, WSMessageType } from '../fetch/api';
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  constructor(private wsService: WebSocketService) { }
+  inGame: boolean = false;
+
+  constructor(private wsService: WebSocketService) {
+  }
 
   /**
    * Sends a CreateGame message to the websocket to create a game
+   * @param username - The player's username
    */
-  requestCreateGame(): void {
-    console.log('requesting for a game to be made');
-    const payload = {
+  requestCreateGame(username: string) {
+    this.wsService.connect(username);
+
+    const createGameMessage = {
       msgType: WSMessageType.CreateGame,
       data: {}
     } as ModelsRestWSCreateGame;
 
-    this.wsService.sendMessage(payload);
+    this.wsService.sendMessage(createGameMessage);
   }
 
   /**
    * Sends a JoinGame message to the websocket with specified game id
-   * @param id The game id
+   * @param username - The player's username
+   * @param id - The game id
    */
-  requestJoinGame(id: string): void {
-    const payload = {
+  requestJoinGame(username: string, id: string) {
+    this.wsService.connect(username);
+    this.inGame = true;
+
+    const joinGameMessage = {
       msgType: WSMessageType.JoinGame,
       data: {
         id
       } as ModelsRestWSJoinGame
     } as WSMessage;
 
-    this.wsService.sendMessage(payload);
+    this.wsService.sendMessage(joinGameMessage);
   }
 }

@@ -28,29 +28,43 @@ class GameController @Inject() (playerParentActor: ActorRef[PlayerParentActor.Me
 
   val logger: Logger = play.api.Logger(getClass)
 
-  def socket = WebSocket.acceptOrResult[JsValue, JsValue] {
-    case request =>
-      wsFutureFlow(request).map { flow =>
-        Right(flow)
-      }.recover {
-        case e: Exception =>
-          logger.error("Cannot create websocket", e)
-          val jsError = Json.obj("error" -> "Cannot create websocket")
-          val result = InternalServerError(jsError)
-          Left(result)
-      }
+  def authSocket(username: String, token: String) = {
+    // TODO: Update the user's username in the database if different
+    createWebSocketFlow(username)
+  }
+
+  def anonSocket(username: String) = {
+    // TODO: Generate token for anonymous user
+    createWebSocketFlow(username)
+  }
+
+  private def createWebSocketFlow(username: String) = {
+    WebSocket.acceptOrResult[JsValue, JsValue] {
+      case request =>
+        wsFutureFlow(request, username).map { flow =>
+          Right(flow)
+        }.recover {
+          case e: Exception =>
+            logger.error("Cannot create websocket", e)
+            val jsError = Json.obj("error" -> "Cannot create websocket")
+            val result = InternalServerError(jsError)
+            Left(result)
+        }
+    }
   }
 
   /**
    * Creates a Future containing a Flow of JsValue in and out.
    */
-  private def wsFutureFlow(request: RequestHeader): Future[Flow[JsValue, JsValue, NotUsed]] = {
+  private def wsFutureFlow(request: RequestHeader, username: String): Future[Flow[JsValue, JsValue, NotUsed]] = {
     // Use guice assisted injection to instantiate and configure the child actor.
+    logger.error(s"Username: $username")
+
 
     // Ask requires a timeout, if the timeout hits without response
     // the ask is failed with a TimeoutException
     implicit val timeout = Timeout(1.second) // the first run in dev can take a while :-(
-    playerParentActor.ask(replyTo => PlayerParentActor.Create(request.id.toString, refereeParentActor, replyTo))
+    playerParentActor.ask(replyTo => PlayerParentActor.Create(request.id.toString, username, refereeParentActor, replyTo))
   }
 
   /**

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from './services/api.service';
-import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AppComponent {
 
-  constructor (private apiService: ApiService) {}
+  constructor (private apiService: ApiService,
+               private authService: AuthService) {}
 
   ngOnInit() {
   }
+
+  isLoggedIn = this.authService.isLoggedIn();
+  logout = this.authService.logout();
 
   /**
    * This function gets the status of the server

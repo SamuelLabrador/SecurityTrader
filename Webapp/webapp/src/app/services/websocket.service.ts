@@ -3,17 +3,34 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { ConfigurationService } from './configuration.service';
 import { WSMessage, WSMessageType } from '../fetch/api';
 import { Observable } from 'rxjs';
+import { AuthService } from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
-  webSocket: WebSocketSubject<unknown>;
 
-  chatObservable: Observable<any>;
+  webSocket: WebSocketSubject<unknown> | undefined = undefined;
+  chatObservable: Observable<any> | undefined = undefined;
+  connected: boolean = false;
 
-  constructor(private configService: ConfigurationService) {
-    this.webSocket = webSocket(configService.wsUrl);
+  constructor(private configService: ConfigurationService,
+              private authService: AuthService) {}
+
+  /**
+   * IMPORTANT! THE USERNAME SHOULD BE VALIDATED BEFORE BEING PASSED
+   * INTO THIS FUNCTION
+   *
+   * @param username - The username the player wants to use
+   */
+  connect(username: string): void {
+
+    // We want to append the token to the url if the user is logged in.
+    const url = this.authService.isLoggedIn() ?
+      `${this.configService.webSocketUrl}/${username}/${this.authService.getToken()}` :
+      `${this.configService.webSocketUrl}/${username}`
+
+    this.webSocket = webSocket(url);
 
     // For handling websocket messages, checkout this guide:
     // https://rxjs-dev.firebaseapp.com/api/webSocket/webSocket
@@ -36,11 +53,11 @@ export class WebSocketService {
         data: {}
       } as WSMessage;
 
-      this.webSocket.next(pingData);
+      this.sendMessage(pingData);
     }, 60 * 1000);
   }
 
   sendMessage(payload: any): void {
-    this.webSocket.next(payload);
+    this.webSocket ? this.webSocket.next(payload) : undefined
   }
 }
